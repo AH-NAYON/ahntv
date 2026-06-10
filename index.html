@@ -202,7 +202,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 .fav-btn.on{color:var(--primary)}
 
 /* ═══════════════════════════════════════════
-   INSTALL BANNER (PWA Popup)
+   INSTALL BANNER (PWA Popup) – শুধুমাত্র যখন ইন্সটল রেডি
 ═══════════════════════════════════════════ */
 .install-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
@@ -468,8 +468,8 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
 
 <!-- ═══════════════════════════════════════════
      PWA INSTALL BANNER (Popup)
-     "Pop up hoye bolbe j install korun"
-     Install hole r pop up dbe na
+     এখন শুধুমাত্র তখনই দেখা যাবে যখন ইন্সটল রেডি
+     Install-এ ক্লিক করলেই সরাসরি ইন্সটল হবে
 ═══════════════════════════════════════════ -->
 <div class="install-banner" id="installBanner" role="dialog" aria-label="Install app" aria-live="polite">
   <div class="ib-icon"><i class="fas fa-download"></i></div>
@@ -532,7 +532,6 @@ const GROUPS = [
     };
     const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
     const manifestUrl = URL.createObjectURL(blob);
-    // Replace fallback manifest link
     const fallbackLink = document.getElementById('manifestFallback');
     if(fallbackLink){
       fallbackLink.href = manifestUrl;
@@ -540,7 +539,7 @@ const GROUPS = [
     }
     console.log('✅ PWA Manifest dynamically generated');
   } catch(e){
-    console.warn('⚠️ Manifest blob generation failed, using fallback:', e);
+    console.warn('⚠️ Manifest blob generation failed', e);
   }
 })();
 
@@ -548,32 +547,30 @@ const GROUPS = [
 // PWA: Service Worker Registration
 // ═══════════════════════════════════════════
 if('serviceWorker' in navigator){
-  // Try to register sw.js (user should create this file in root)
   navigator.serviceWorker.register('/sw.js').then(reg => {
     console.log('✅ Service Worker registered:', reg.scope);
   }).catch(err => {
     console.warn('⚠️ Service Worker not registered (sw.js missing?):', err.message);
-    // Install prompt works without SW as long as manifest exists
   });
 }
 
 // ═══════════════════════════════════════════
-// PWA: Install Prompt Logic
+// PWA: Install Prompt – সরাসরি ইন্সটল
 // ═══════════════════════════════════════════
 let deferredPrompt = null;
 const INSTALL_DISMISS_KEY = 'ahn_iptv_install_dismissed';
-const INSTALL_DISMISS_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days before showing again
+const INSTALL_DISMISS_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 দিন পর আবার দেখাবে
 
-// Check if app is already installed
+// অ্যাপ ইন্সটল আছে কিনা চেক
 function isAppInstalled(){
   return window.matchMedia('(display-mode: standalone)').matches
       || window.matchMedia('(display-mode: fullscreen)').matches
       || window.matchMedia('(display-mode: minimal-ui)').matches
-      || (navigator.standalone === true)  // iOS
+      || (navigator.standalone === true)
       || localStorage.getItem('pwa_installed') === 'true';
 }
 
-// Check if user dismissed banner recently
+// ইউজার আগে ডিসমিস করেছিল কিনা (নির্দিষ্ট সময়ের মধ্যে)
 function isDismissedRecently(){
   const dismissed = localStorage.getItem(INSTALL_DISMISS_KEY);
   if(!dismissed) return false;
@@ -581,35 +578,35 @@ function isDismissedRecently(){
   return elapsed < INSTALL_DISMISS_EXPIRY;
 }
 
-// Show the install banner
+// ইন্সটল ব্যানার দেখান (শুধু তখনই যখন deferredPrompt ready)
 function showInstallBanner(){
-  // Don't show if already installed
-  if(isAppInstalled()) return;
-  // Don't show if dismissed recently
-  if(isDismissedRecently()) return;
-  // Show after 3 seconds delay
+  // ইতিমধ্যে ইন্সটল হলে বা ডিসমিস করলে দেখাব না
+  if(isAppInstalled() || isDismissedRecently()) return;
+  // deferredPrompt না থাকলে ইন্সটল সম্ভব নয় – তাই ব্যানার দেখানোর দরকার নেই
+  if(!deferredPrompt) return;
+
   setTimeout(() => {
     const banner = document.getElementById('installBanner');
-    if(banner && !isAppInstalled() && !isDismissedRecently()){
+    if(banner && !isAppInstalled() && !isDismissedRecently() && deferredPrompt){
       banner.classList.add('show');
     }
   }, 3000);
 }
 
-// Hide the install banner
+// ব্যানার হাইড করা
 function hideInstallBanner(){
   const banner = document.getElementById('installBanner');
   if(banner) banner.classList.remove('show');
 }
 
-// Dismiss button — store timestamp and hide
+// ডিসমিস বাটন – টাইমস্ট্যাম্প সংরক্ষণ করে ব্যানার লুকান
 function dismissInstallBanner(){
   localStorage.setItem(INSTALL_DISMISS_KEY, Date.now().toString());
   hideInstallBanner();
   toast('পরে আবার দেখানো হবে', 'fa-clock');
 }
 
-// Trigger native install dialog
+// সরাসরি ইন্সটল – শুধুমাত্র deferredPrompt.prompt() কল করে
 function triggerInstall(){
   if(deferredPrompt){
     deferredPrompt.prompt();
@@ -621,43 +618,26 @@ function triggerInstall(){
         toast('🎉 অ্যাপ ইন্সটল হচ্ছে!', 'fa-circle-check');
       } else {
         console.log('❌ User declined install');
-        // Don't dismiss permanently, might show again
         dismissInstallBanner();
       }
       deferredPrompt = null;
     });
   } else {
-    // Fallback: if deferredPrompt not available, show manual instructions
-    showManualInstallHelp();
+    // কখনোই আসার কথা না, কিন্তু সেফটি ফলব্যাক
+    hideInstallBanner();
   }
 }
 
-// Manual install help for browsers that don't support beforeinstallprompt
-function showManualInstallHelp(){
-  const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-  const isAndroid = /android/.test(navigator.userAgent.toLowerCase());
-  let msg = '';
-  if(isIOS){
-    msg = 'Safari-তে Share বাটনে ট্যাপ করে "Add to Home Screen" নির্বাচন করুন';
-  } else if(isAndroid){
-    msg = 'ব্রাউজারের মেনু থেকে "Add to Home Screen" বা "Install" সিলেক্ট করুন';
-  } else {
-    msg = 'ব্রাউজারের মেনু থেকে Install/Add to Home Screen সিলেক্ট করুন';
-  }
-  toast(msg, 'fa-info-circle');
-  hideInstallBanner();
-}
-
-// Listen for beforeinstallprompt event
+// beforeinstallprompt ইভেন্ট – ব্রাউজার ইন্সটল সাপোর্ট করলেই শুধু ব্যানার দেখাবে
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Prevent automatic prompt
-  deferredPrompt = e; // Store for later use
-  console.log('📲 beforeinstallprompt fired — app is installable');
-  // Show our custom banner
+  e.preventDefault(); // অটো প্রম্পট বন্ধ
+  deferredPrompt = e; // পরে ব্যবহারের জন্য সংরক্ষণ
+  console.log('📲 beforeinstallprompt fired – ইন্সটল রেডি');
+  // এখন ব্যানার দেখানোর অনুমতি আছে
   showInstallBanner();
 });
 
-// Listen for app installed event
+// অ্যাপ ইন্সটল হয়ে গেলে
 window.addEventListener('appinstalled', () => {
   console.log('🎉 App installed successfully');
   localStorage.setItem('pwa_installed', 'true');
@@ -666,11 +646,10 @@ window.addEventListener('appinstalled', () => {
   toast('✅ অ্যাপ সফলভাবে ইন্সটল হয়েছে!', 'fa-circle-check');
 });
 
-// Check display-mode changes (when user launches installed app)
+// ডিসপ্লে মোড চেক (ইন্সটল হয়ে লঞ্চ হলে)
 const displayModeQuery = window.matchMedia('(display-mode: standalone)');
 displayModeQuery.addEventListener('change', (e) => {
   if(e.matches){
-    // Now running as standalone PWA — hide banner forever
     localStorage.setItem('pwa_installed', 'true');
     hideInstallBanner();
   }
@@ -745,20 +724,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   setupPlayerUI();
   setupKeys();
   updateFavBadge();
-  // If not installed, listen for beforeinstallprompt (may fire later)
-  // Show banner with a delay if deferredPrompt isn't set yet
-  if(!isAppInstalled() && !isDismissedRecently()){
-    // Wait a bit, then show if beforeinstallprompt hasn't fired
-    setTimeout(() => {
-      if(!deferredPrompt && !isAppInstalled() && !isDismissedRecently()){
-        // beforeinstallprompt didn't fire, but we can still show a manual install hint
-        // Only show on mobile devices where install is more relevant
-        if(/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){
-          showInstallBanner();
-        }
-      }
-    }, 5000);
-  }
+  // আর আলাদা করে ব্যানার দেখানোর দরকার নেই – beforeinstallprompt নিজেই দেখাবে
 });
 
 // ═══════════════════════════════════════════
