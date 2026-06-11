@@ -10,9 +10,7 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#E50914">
 
-<!-- ═══════════════════════════════════════════
-     PWA / FAVICON — Root-এ tvlive.png থাকতে হবে
-═══════════════════════════════════════════ -->
+<!-- PWA / FAVICON -->
 <link rel="icon" type="image/png" href="tvlive.png">
 <link rel="shortcut icon" type="image/png" href="tvlive.png">
 <link rel="apple-touch-icon" href="tvlive.png">
@@ -22,7 +20,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AHN IPTV">
 <meta name="mobile-web-app-capable" content="yes">
-<!-- Manifest dynamically generated via JS (blob), fallback-এর জন্য manifest.json ও রাখা যেতে পারে -->
 <link rel="manifest" href="data:application/json;base64," id="manifestFallback">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -38,55 +35,55 @@
   --primary: #E50914;
   --primary-h: #c2070f;
   --primary-glow: rgba(229,9,20,.35);
-  --bg: #08080a;
-  --bg-panel: #111114;
-  --bg-card: #18181d;
-  --bg-el: #1f1f26;
-  --txt: #f5f5f5;
-  --txt-m: #888896;
-  --txt-d: #555560;
-  --bdr: rgba(255,255,255,.07);
-  --bdr-h: rgba(255,255,255,.15);
+  /* নতুন প্রিমিয়াম ডে মোড - নরম, ওয়ার্ম, চোখে আরাম */
+  --bg: #f4f5f7;
+  --bg-panel: #fafbfc;
+  --bg-card: #ffffff;
+  --bg-el: #f0f2f5;
+  --txt: #1e1e2f;
+  --txt-m: #555566;
+  --txt-d: #9a9aad;
+  --bdr: rgba(0,0,0,.05);
+  --bdr-h: rgba(0,0,0,.09);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .bn{font-family:'Hind Siliguri',sans-serif}
 ::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:10px}
 
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes livebeat{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
 @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-@keyframes slideUp{from{opacity:0;transform:translateY(80px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(229,9,20,.5)}70%{box-shadow:0 0 0 14px rgba(229,9,20,0)}100%{box-shadow:0 0 0 0 rgba(229,9,20,0)}}
 .fade-up{animation:fadeUp .4s ease both}
 
 /* SKELETON */
-.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.10) 50%,rgba(255,255,255,.04) 75%);background-size:400px 100%;animation:shimmer 1.4s infinite;border-radius:8px}
+.skeleton{background:linear-gradient(90deg,rgba(0,0,0,.03) 25%,rgba(0,0,0,.07) 50%,rgba(0,0,0,.03) 75%);background-size:400px 100%;animation:shimmer 1.4s infinite;border-radius:8px}
 .sk-tab{height:40px;margin-bottom:5px;border-radius:8px}
 .sk-card{height:80px;border-radius:10px}
 
 /* NAVBAR */
-.navbar{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(8,8,10,.95);backdrop-filter:blur(20px) saturate(200%);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:10000;box-shadow:0 2px 24px rgba(0,0,0,.7)}
+.navbar{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,.9);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:10000;box-shadow:0 1px 8px rgba(0,0,0,.02)}
 .brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;color:var(--primary);letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .brand .logo-icon{font-size:24px;filter:drop-shadow(0 0 8px var(--primary))}
 .brand-sub{font-size:9px;color:var(--txt-m);font-weight:400;letter-spacing:2px;text-transform:uppercase;display:block;line-height:1;margin-top:1px}
 .nav-center{flex:1;max-width:340px;margin:0 20px;position:relative}
-.nav-center input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--bdr);color:var(--txt);padding:8px 14px 8px 36px;border-radius:20px;font-size:13px;outline:none;transition:.3s;font-family:'Poppins',sans-serif}
-.nav-center input:focus{border-color:var(--primary);background:rgba(255,255,255,.08);box-shadow:0 0 0 3px rgba(229,9,20,.12)}
-.nav-center input::placeholder{color:var(--txt-m)}
-.nav-center .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt-m);font-size:12px}
+.nav-center input{width:100%;background:var(--bg-el);border:1px solid var(--bdr);color:var(--txt);padding:8px 14px 8px 36px;border-radius:20px;font-size:13px;outline:none;transition:.3s;font-family:'Poppins',sans-serif}
+.nav-center input:focus{border-color:var(--primary);background:var(--bg-panel);box-shadow:0 0 0 3px rgba(229,9,20,.08)}
+.nav-center input::placeholder{color:var(--txt-d)}
+.nav-center .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt-d);font-size:12px}
 .nav-actions{display:flex;align-items:center;gap:7px}
-.nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bdr);background:rgba(255,255,255,.04);color:var(--txt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;position:relative}
+.nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bdr);background:var(--bg-el);color:var(--txt-m);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;position:relative}
 .nav-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
 .badge{position:absolute;top:-2px;right:-2px;background:var(--primary);color:#fff;font-size:8px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg)}
 .menu-btn{display:none}
 
 /* OVERLAY */
-.overlay{position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:9998;opacity:0;pointer-events:none;transition:.3s}
+.overlay{position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);backdrop-filter:blur(3px);z-index:9998;opacity:0;pointer-events:none;transition:.3s}
 .overlay.show{opacity:1;pointer-events:auto}
 
 /* LAYOUT */
@@ -97,8 +94,8 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 .sidebar-label{font-size:10px;text-transform:uppercase;color:var(--txt-d);letter-spacing:1.5px;font-weight:600;padding:4px 10px 8px}
 .group-tab{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border-radius:8px;border:none;background:transparent;color:var(--txt-m);font-size:12.5px;font-weight:500;cursor:pointer;transition:.2s;text-align:left;margin-bottom:2px;font-family:'Poppins',sans-serif}
 .group-tab i{width:16px;text-align:center;font-size:13px}
-.group-tab .cnt{margin-left:auto;font-size:9px;background:rgba(255,255,255,.07);padding:2px 6px;border-radius:20px;color:var(--txt-d)}
-.group-tab:hover{background:rgba(255,255,255,.05);color:var(--txt)}
+.group-tab .cnt{margin-left:auto;font-size:9px;background:rgba(0,0,0,.04);padding:2px 6px;border-radius:20px;color:var(--txt-d)}
+.group-tab:hover{background:rgba(0,0,0,.02);color:var(--txt)}
 .group-tab.active{background:var(--primary);color:#fff;box-shadow:0 4px 12px var(--primary-glow)}
 .group-tab.active .cnt{background:rgba(255,255,255,.2);color:#fff}
 
@@ -109,7 +106,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 .content-row{display:grid;grid-template-columns:1fr 280px;gap:16px;margin-bottom:20px;align-items:start}
 
 /* PLAYER */
-.player-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--bdr);box-shadow:0 8px 32px rgba(0,0,0,.7);aspect-ratio:16/9}
+.player-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--bdr);box-shadow:0 4px 24px rgba(0,0,0,.06);aspect-ratio:16/9}
 .player-top-grad{position:absolute;top:0;left:0;right:0;height:70px;background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);z-index:20;pointer-events:none}
 .player-bot-grad{position:absolute;bottom:0;left:0;right:0;height:90px;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);z-index:20;pointer-events:none}
 .now-bar{position:absolute;top:0;left:0;right:0;padding:12px 16px;display:flex;align-items:center;gap:8px;z-index:21;opacity:0;transition:.3s}
@@ -117,11 +114,12 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 .live-dot{width:7px;height:7px;background:#ff3b30;border-radius:50%;animation:livebeat 1.4s ease infinite;flex-shrink:0}
 .live-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#ff3b30;text-transform:uppercase}
 .now-name{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.buffering{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:30;opacity:0;pointer-events:none;transition:.25s}
+.buffering{position:absolute;inset:0;background:rgba(250,251,252,.95);backdrop-filter:blur(6px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:30;opacity:0;pointer-events:none;transition:.25s}
 .buffering.show{opacity:1;pointer-events:auto}
-.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
-.buf-txt{font-size:13px;font-weight:600;color:#fff;font-family:'Hind Siliguri',sans-serif;text-align:center;padding:0 20px}
+.spinner{width:40px;height:40px;border:3px solid rgba(0,0,0,.08);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+.buf-txt{font-size:13px;font-weight:600;color:var(--txt);font-family:'Hind Siliguri',sans-serif;text-align:center;padding:0 20px}
 video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
+.video-zoom-container{position:absolute;inset:0;overflow:hidden;z-index:15}
 iframe.embed-player{width:100%;height:100%;border:none;display:block;background:#000;position:absolute;inset:0;z-index:10}
 
 /* CONTROLS */
@@ -138,21 +136,25 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 .vol-sl{width:65px;height:4px;accent-color:var(--primary);cursor:pointer}
 .ch-info{font-size:11px;color:rgba(255,255,255,.7);font-weight:500}
 .ch-info span{color:#fff;font-weight:700}
+.zoom-controls{display:none;align-items:center;gap:4px}
+.player-wrap.fullscreen-active .zoom-controls{display:flex}
+.zoom-controls .ctrl-btn{width:28px;height:28px;font-size:11px}
 .player-wrap:fullscreen,.player-wrap:-webkit-full-screen{aspect-ratio:unset;border-radius:0;max-height:100vh}
+.player-wrap:fullscreen .video-zoom-container,.player-wrap:-webkit-full-screen .video-zoom-container{position:relative;width:100%;height:100%}
 
 /* POPULAR PANEL */
-.pop-panel{background:var(--bg-panel);border-radius:12px;border:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden}
+.pop-panel{background:var(--bg-panel);border-radius:12px;border:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.02)}
 .pop-panel-head{padding:12px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .pop-panel-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
 .pop-panel-title::before{content:'';width:3px;height:16px;background:var(--primary);border-radius:2px;display:block}
 .pop-badge{background:var(--primary);color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.5px}
 .pop-list{overflow-y:auto;flex:1;padding:8px}
 .pop-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;transition:.2s;border:1px solid transparent;margin-bottom:4px;position:relative}
-.pop-item:hover{background:rgba(255,255,255,.05);border-color:var(--bdr-h)}
-.pop-item.active{background:rgba(229,9,20,.12);border-color:var(--primary)}
+.pop-item:hover{background:rgba(0,0,0,.02);border-color:var(--bdr-h)}
+.pop-item.active{background:rgba(229,9,20,.06);border-color:var(--primary)}
 .pop-item-num{font-size:9px;color:var(--txt-d);font-weight:700;width:14px;text-align:center;flex-shrink:0}
 .pop-item.active .pop-item-num{color:var(--primary)}
-.pop-logo{width:42px;height:32px;border-radius:6px;background:#0d0d10;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border:1px solid var(--bdr)}
+.pop-logo{width:42px;height:32px;border-radius:6px;background:var(--bg-el);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border:1px solid var(--bdr)}
 .pop-logo img{max-width:100%;max-height:100%;object-fit:contain}
 .pop-info{flex:1;min-width:0}
 .pop-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -161,58 +163,53 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 .pop-play-icon{color:var(--txt-d);font-size:10px;flex-shrink:0}
 .pop-item.active .pop-play-icon{color:var(--primary);animation:livebeat 2s ease infinite}
 .pop-footer{padding:10px 14px;border-top:1px solid var(--bdr);text-align:center}
-.pop-all-btn{background:rgba(229,9,20,.1);border:1px solid rgba(229,9,20,.3);color:var(--primary);font-size:11px;font-weight:600;padding:7px 16px;border-radius:7px;cursor:pointer;width:100%;font-family:'Poppins',sans-serif;transition:.2s;letter-spacing:.3px}
-.pop-all-btn:hover{background:rgba(229,9,20,.2)}
+.pop-all-btn{background:rgba(229,9,20,.06);border:1px solid rgba(229,9,20,.2);color:var(--primary);font-size:11px;font-weight:600;padding:7px 16px;border-radius:7px;cursor:pointer;width:100%;font-family:'Poppins',sans-serif;transition:.2s;letter-spacing:.3px}
+.pop-all-btn:hover{background:rgba(229,9,20,.12)}
 
 /* NOW PLAYING CARD */
-.np-card{background:var(--bg-el);border-radius:10px;padding:14px 16px;border:1px solid var(--bdr);margin-bottom:18px;display:flex;align-items:center;gap:14px}
-.np-logo{width:52px;height:52px;border-radius:7px;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.np-card{background:var(--bg-panel);border-radius:10px;padding:14px 16px;border:1px solid var(--bdr);margin-bottom:18px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.np-logo{width:52px;height:52px;border-radius:7px;background:var(--bg-el);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
 .np-logo img{max-width:100%;max-height:100%;object-fit:contain}
 .np-info{flex:1;min-width:0}
 .np-title{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .np-meta{font-size:11px;color:var(--txt-m);margin-top:3px;display:flex;align-items:center;gap:7px}
 .np-badge{background:var(--primary);color:#fff;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:1px;text-transform:uppercase;animation:livebeat 2s ease infinite}
-.np-type-badge{background:rgba(255,255,255,.08);color:var(--txt-m);font-size:8px;font-weight:600;padding:2px 5px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.np-type-badge{background:rgba(0,0,0,.04);color:var(--txt-m);font-size:8px;font-weight:600;padding:2px 5px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
 
 /* CHANNEL GRID */
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sec-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700}
 .sec-title::before{content:'';width:3px;height:18px;background:var(--primary);border-radius:2px;display:block}
-.ch-count{font-size:11px;color:var(--txt-m);background:rgba(255,255,255,.06);padding:2px 9px;border-radius:20px}
+.ch-count{font-size:11px;color:var(--txt-m);background:var(--bg-el);padding:2px 9px;border-radius:20px}
 .channel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;padding-bottom:40px}
-.ch-card{background:var(--bg-card);border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid transparent;transition:all .22s ease;position:relative;display:flex;flex-direction:column}
-.ch-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.5);border-color:var(--bdr-h)}
-.ch-card.active{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary),0 8px 22px rgba(229,9,20,.2)}
+.ch-card{background:var(--bg-card);border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid var(--bdr);transition:all .22s ease;position:relative;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.ch-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.06);border-color:var(--bdr-h)}
+.ch-card.active{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary),0 8px 22px rgba(229,9,20,.08)}
 .ch-card.active::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--primary)}
-.card-thumb{height:80px;background:#111;display:flex;align-items:center;justify-content:center;padding:12px;overflow:hidden;position:relative}
+.card-thumb{height:80px;background:var(--bg-el);display:flex;align-items:center;justify-content:center;padding:12px;overflow:hidden;position:relative}
 .card-thumb img{max-width:100%;max-height:100%;object-fit:contain;transition:.3s}
 .ch-card:hover .card-thumb img{transform:scale(1.05)}
 .play-ov{position:absolute;inset:0;background:rgba(229,9,20,.8);opacity:0;display:flex;align-items:center;justify-content:center;transition:.22s}
 .ch-card:hover .play-ov{opacity:1}
 .play-ov i{font-size:20px;color:#fff}
 .url-type{position:absolute;bottom:4px;left:4px;font-size:7px;font-weight:700;padding:1px 4px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;opacity:.8}
-.url-type.hls{background:#1a3a1a;color:#4ade80}
-.url-type.yt{background:#1a1a2e;color:#ff6b6b}
-.url-type.embed{background:#1a1a3a;color:#60a5fa}
+.url-type.hls{background:#dcfce7;color:#166534}
+.url-type.yt{background:#fee2e2;color:#991b1b}
+.url-type.embed{background:#dbeafe;color:#1e40af}
 .card-body{padding:8px 10px 10px}
 .card-name{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--txt);margin-bottom:3px}
 .card-grp{font-size:9.5px;color:var(--txt-m);text-transform:uppercase;letter-spacing:.4px}
-.fav-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);border:none;color:rgba(255,255,255,.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.2s;z-index:5}
+.fav-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);border:none;color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.2s;z-index:5}
 .fav-btn:hover{transform:scale(1.15);color:#fff}
 .fav-btn.on{color:var(--primary)}
 
-/* ═══════════════════════════════════════════
-   INSTALL BANNER (PWA Popup) – শুধুমাত্র যখন ইন্সটল রেডি
-═══════════════════════════════════════════ */
+/* INSTALL BANNER */
 .install-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
-  background:linear-gradient(135deg,#1a1a24,#1f1f2e);
-  border:1px solid var(--bdr-h);
-  border-radius:16px;
-  padding:14px 18px;
-  display:flex;align-items:center;gap:12px;
-  z-index:99999;
-  box-shadow:0 12px 40px rgba(0,0,0,.8),0 0 0 1px rgba(229,9,20,.15);
+  background:var(--bg-panel); border:1px solid var(--bdr-h);
+  border-radius:16px; padding:14px 18px;
+  display:flex;align-items:center;gap:12px; z-index:99999;
+  box-shadow:0 12px 40px rgba(0,0,0,.04),0 0 0 1px rgba(229,9,20,.15);
   max-width:500px;width:calc(100% - 32px);
   transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;
   opacity:0;pointer-events:none;
@@ -223,32 +220,15 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
   opacity:1;pointer-events:auto;
   animation:pulse-ring 2s ease infinite;
 }
-.install-banner .ib-icon{
-  width:44px;height:44px;border-radius:12px;
-  background:var(--primary);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;color:#fff;flex-shrink:0;
-  box-shadow:0 4px 14px var(--primary-glow);
-}
+.install-banner .ib-icon{ width:44px;height:44px;border-radius:12px; background:var(--primary); display:flex;align-items:center;justify-content:center; font-size:20px;color:#fff;flex-shrink:0; box-shadow:0 4px 14px var(--primary-glow); }
 .install-banner .ib-text{flex:1;min-width:0}
-.install-banner .ib-title{font-size:13px;font-weight:700;color:#fff;font-family:'Hind Siliguri',sans-serif}
+.install-banner .ib-title{font-size:13px;font-weight:700;color:var(--txt);font-family:'Hind Siliguri',sans-serif}
 .install-banner .ib-sub{font-size:10px;color:var(--txt-m);margin-top:1px}
 .install-banner .ib-btns{display:flex;gap:7px;flex-shrink:0}
-.install-banner .ib-install{
-  background:var(--primary);color:#fff;border:none;
-  padding:9px 16px;border-radius:10px;font-weight:700;
-  font-size:12px;cursor:pointer;font-family:'Hind Siliguri',sans-serif;
-  transition:.2s;white-space:nowrap;
-  box-shadow:0 4px 12px var(--primary-glow);
-}
+.install-banner .ib-install{ background:var(--primary);color:#fff;border:none; padding:9px 16px;border-radius:10px;font-weight:700; font-size:12px;cursor:pointer;font-family:'Hind Siliguri',sans-serif; transition:.2s;white-space:nowrap; box-shadow:0 4px 12px var(--primary-glow); }
 .install-banner .ib-install:hover{background:var(--primary-h);transform:scale(1.04)}
-.install-banner .ib-close{
-  width:30px;height:30px;border-radius:50%;border:1px solid var(--bdr);
-  background:rgba(255,255,255,.04);color:var(--txt-m);
-  cursor:pointer;font-size:12px;display:flex;align-items:center;
-  justify-content:center;transition:.2s;flex-shrink:0;
-}
-.install-banner .ib-close:hover{background:rgba(255,255,255,.1);color:#fff}
+.install-banner .ib-close{ width:30px;height:30px;border-radius:50%;border:1px solid var(--bdr); background:var(--bg-el);color:var(--txt-m); cursor:pointer;font-size:12px;display:flex;align-items:center; justify-content:center;transition:.2s;flex-shrink:0; }
+.install-banner .ib-close:hover{background:rgba(0,0,0,.05);color:var(--txt)}
 
 /* EMPTY */
 .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--txt-m)}
@@ -257,50 +237,36 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 
 /* TOAST */
 .toast-c{position:fixed;top:72px;right:18px;z-index:99999;display:flex;flex-direction:column;gap:7px}
-.toast{background:var(--bg-el);border:1px solid var(--bdr);border-radius:9px;padding:10px 16px;display:flex;align-items:center;gap:9px;font-size:12px;color:var(--txt);box-shadow:0 8px 24px rgba(0,0,0,.5);animation:fadeUp .3s ease;max-width:260px}
+.toast{background:var(--bg-panel);border:1px solid var(--bdr);border-radius:9px;padding:10px 16px;display:flex;align-items:center;gap:9px;font-size:12px;color:var(--txt);box-shadow:0 8px 24px rgba(0,0,0,.04);animation:fadeUp .3s ease;max-width:260px}
 .toast i{color:var(--primary);font-size:13px}
 @keyframes toastOut{to{opacity:0;transform:translateX(20px)}}
 .toast.hide{animation:toastOut .3s ease forwards}
 
 /* FOOTER */
-.footer{background:var(--bg-panel);border:1px solid var(--bdr);border-radius:12px;padding:24px;text-align:center;margin-bottom:16px}
-.footer h3{font-size:15px;margin-bottom:5px}
-.social-row{display:flex;justify-content:center;gap:10px;margin:12px 0 8px}
-.social-btn{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;text-decoration:none;transition:.22s}
-.social-btn:hover{transform:translateY(-3px) scale(1.1);filter:brightness(1.2)}
-.fb{background:#1877F2}.tg{background:#229ED9}
-.footer-copy{font-size:11px;color:var(--txt-d);margin-top:7px}
-.footer-copy span{color:var(--primary);font-weight:600}
+.footer{background:var(--bg-panel);border:1px solid var(--bdr);border-radius:12px;padding:24px;text-align:center;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.footer-verified{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;color:var(--primary);font-weight:600;font-size:14px}
+.footer-verified i{font-size:16px;filter:drop-shadow(0 0 4px rgba(229,9,20,.4))}
+.footer-contact-text{font-size:13px;color:var(--txt-m);margin-bottom:12px}
+.contact-icons{display:flex;justify-content:center;gap:14px;margin-bottom:12px}
+.contact-icon-link{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;text-decoration:none;transition:.22s;box-shadow:0 4px 8px rgba(0,0,0,.08)}
+.contact-icon-link.fb{background:#1877F2}
+.contact-icon-link.web{background:#0d6efd}
+.contact-icon-link.mail{background:#dc3545}
+.contact-icon-link:hover{transform:translateY(-3px);filter:brightness(1.1)}
+.footer-copy{font-size:11px;color:var(--txt-d);margin-top:8px}
 
 /* BACK TO TOP */
 #topBtn{position:fixed;bottom:22px;right:22px;width:42px;height:42px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:16px;cursor:pointer;display:none;z-index:99998;box-shadow:0 4px 14px var(--primary-glow);transition:.22s}
 #topBtn:hover{transform:translateY(-3px)}
 
 /* SHORTCUT HINT */
-.s-hint{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:#fff;font-size:11px;padding:5px 13px;border-radius:18px;z-index:99999;pointer-events:none;white-space:nowrap;opacity:0;transition:.3s;border:1px solid var(--bdr)}
+.s-hint{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--bg-panel);color:var(--txt);font-size:11px;padding:5px 13px;border-radius:18px;z-index:99999;pointer-events:none;white-space:nowrap;opacity:0;transition:.3s;border:1px solid var(--bdr);box-shadow:0 4px 10px rgba(0,0,0,.04)}
 .s-hint.show{opacity:1}
 
 /* MOBILE SEARCH */
 .mob-search{display:none;margin-bottom:12px;position:relative}
 .mob-search input{width:100%;background:var(--bg-panel);border:1px solid var(--bdr);color:var(--txt);padding:9px 14px 9px 36px;border-radius:9px;outline:none;font-size:13px;font-family:'Poppins',sans-serif}
 .mob-search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--txt-m);font-size:12px}
-
-/* LIGHT MODE */
-body.light{--bg:#f0f0f5;--bg-panel:#ffffff;--bg-card:#ffffff;--bg-el:#f5f5fa;--txt:#111;--txt-m:#666;--txt-d:#aaa;--bdr:rgba(0,0,0,.09);--bdr-h:rgba(0,0,0,.18)}
-body.light .navbar{background:rgba(255,255,255,.96)}
-body.light .nav-center input{color:#111;background:#f0f0f5}
-body.light .nav-btn{color:#333}
-body.light .buffering{background:rgba(255,255,255,.88)}
-body.light .buf-txt{color:#111}
-body.light .skeleton{background:linear-gradient(90deg,rgba(0,0,0,.04) 25%,rgba(0,0,0,.10) 50%,rgba(0,0,0,.04) 75%);background-size:400px 100%}
-body.light .mob-search input{color:#111}
-body.light .url-type.hls{background:#dcfce7;color:#166534}
-body.light .url-type.yt{background:#fee2e2;color:#991b1b}
-body.light .url-type.embed{background:#dbeafe;color:#1e40af}
-body.light .install-banner{background:linear-gradient(135deg,#fff,#f5f5fa);box-shadow:0 12px 40px rgba(0,0,0,.15),0 0 0 1px rgba(229,9,20,.2)}
-body.light .install-banner .ib-title{color:#111}
-body.light .install-banner .ib-sub{color:#666}
-body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
 
 /* RESPONSIVE */
 @media(max-width:1100px){
@@ -311,7 +277,7 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
   .pop-panel{max-height:280px}
   .menu-btn{display:flex}
   .nav-center{display:none}
-  .sidebar{left:-260px;width:250px;box-shadow:5px 0 20px rgba(0,0,0,.6)}
+  .sidebar{left:-260px;width:250px;box-shadow:5px 0 20px rgba(0,0,0,.04)}
   .sidebar.open{left:0}
   .main{margin-left:0;padding:12px}
   .player-wrap{border-radius:0;margin:0 -12px;position:sticky;top:60px;z-index:9997}
@@ -319,17 +285,10 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
   .card-thumb{height:66px}
   .mob-search{display:block}
   .np-card{padding:10px 12px;gap:10px}
-  .install-banner{bottom:12px;width:calc(100% - 20px);padding:12px 14px;gap:8px}
-  .install-banner .ib-icon{width:36px;height:36px;font-size:16px;border-radius:10px}
-  .install-banner .ib-title{font-size:12px}
-  .install-banner .ib-install{padding:7px 12px;font-size:11px}
 }
 @media(max-width:480px){
   .channel-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:7px}
   .card-thumb{height:58px}
-  .install-banner{bottom:8px;padding:10px 12px;gap:6px;border-radius:12px}
-  .install-banner .ib-icon{width:32px;height:32px;font-size:14px;border-radius:8px}
-  .install-banner .ib-install{padding:6px 10px;font-size:10px;border-radius:8px}
 }
 </style>
 </head>
@@ -355,7 +314,7 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
       <i class="fas fa-heart" aria-hidden="true"></i>
       <span class="badge" id="favBadge" style="display:none" aria-live="polite">0</span>
     </button>
-    <button class="nav-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+    <button class="nav-btn" id="themeBtn" onclick="toggleTheme()" title="Dark mode" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
   </div>
 </header>
 
@@ -373,11 +332,12 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
       <input type="search" id="mobileSearch" placeholder="চ্যানেল খুঁজুন..." oninput="onSearch(this.value)" autocomplete="off">
     </div>
 
-    <!-- PLAYER + POPULAR CHANNELS ROW -->
     <div class="content-row">
       <div class="player-wrap" id="playerWrap">
         <div class="skeleton" id="playerSkeleton" style="position:absolute;inset:0;z-index:50;border-radius:0"></div>
-        <video id="video" autoplay="" playsinline="" preload="none" aria-label="Video player"></video>
+        <div class="video-zoom-container" id="videoZoomContainer">
+          <video id="video" autoplay="" playsinline="" preload="none" aria-label="Video player"></video>
+        </div>
         <div class="player-top-grad"></div>
         <div class="now-bar" id="nowBar">
           <div class="live-dot"></div>
@@ -401,14 +361,17 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
             </div>
             <div class="ctrl-r">
               <span class="ch-info">Ch <span id="chIdx">1</span>/<span id="chTot">—</span></span>
+              <div class="zoom-controls" id="zoomControls">
+                <button class="ctrl-btn" onclick="zoomVideo(-0.1)" title="Zoom Out" aria-label="Zoom Out"><i class="fas fa-magnifying-glass-minus"></i></button>
+                <button class="ctrl-btn" onclick="zoomVideo(0.1)" title="Zoom In" aria-label="Zoom In"><i class="fas fa-magnifying-glass-plus"></i></button>
+              </div>
+              <button class="ctrl-btn" onclick="toggleLandscape()" id="fsBtn" title="Landscape Fullscreen (F)" aria-label="Landscape Fullscreen"><i class="fas fa-expand"></i></button>
               <button class="ctrl-btn" onclick="togglePiP()" title="Picture-in-Picture (P)" aria-label="PiP"><i class="fas fa-clone"></i></button>
-              <button class="ctrl-btn" onclick="toggleFS()" id="fsBtn" title="Fullscreen (F)" aria-label="Fullscreen"><i class="fas fa-expand"></i></button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- POPULAR CHANNELS PANEL -->
       <div class="pop-panel" id="popPanel">
         <div class="pop-panel-head">
           <div class="pop-panel-title">জনপ্রিয় চ্যানেল</div>
@@ -430,7 +393,6 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
       </div>
     </div>
 
-    <!-- NOW PLAYING CARD -->
     <div class="np-card" id="npCard" style="display:none">
       <div class="np-logo"><img id="npLogo" src="" alt="Channel logo" loading="lazy"></div>
       <div class="np-info">
@@ -443,7 +405,6 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
       </div>
     </div>
 
-    <!-- CHANNEL GRID -->
     <div class="sec-head">
       <div class="sec-title" id="secTitle">All Channels</div>
       <span class="ch-count" id="chCount">0 চ্যানেল</span>
@@ -451,13 +412,17 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
     <div class="channel-grid fade-up" id="channelGrid"></div>
 
     <footer class="footer">
-      <h3 class="bn">আমাদের সাথে থাকুন</h3>
-      <p style="font-size:12px;color:var(--txt-m)" class="bn">যেকোনো সমস্যায় যোগাযোগ করুন</p>
-      <div class="social-row">
-        <a href="https://www.facebook.com/share/1JEUDikV8S/" target="_blank" rel="noopener noreferrer" class="social-btn fb" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="social-btn tg" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+      <div class="footer-verified">
+        <i class="fas fa-check-circle"></i>
+        <span class="bn">সুইট বয় নয়ন</span>
       </div>
-      <div class="footer-copy">© কারিগরি সহযোগিতায় <span>AHN</span></div>
+      <div class="footer-contact-text bn">যোগাযোগ করুন</div>
+      <div class="contact-icons">
+        <a href="https://www.facebook.com/share/1JEUDikV8S/" target="_blank" rel="noopener noreferrer" class="contact-icon-link fb" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://ah-nayon.github.io/web" target="_blank" rel="noopener noreferrer" class="contact-icon-link web" aria-label="Website"><i class="fas fa-globe"></i></a>
+        <a href="mailto:mdahoshanhabibnayon@gmail.com" class="contact-icon-link mail" aria-label="Mail"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div class="footer-copy">© 2026 AHN. All rights reserved.</div>
     </footer>
   </main>
 </div>
@@ -466,11 +431,6 @@ body.light .install-banner .ib-close{color:#666;border-color:rgba(0,0,0,.15)}
 <div class="toast-c" id="toastC" aria-live="assertive"></div>
 <div class="s-hint" id="sHint" aria-live="polite"></div>
 
-<!-- ═══════════════════════════════════════════
-     PWA INSTALL BANNER (Popup)
-     এখন শুধুমাত্র তখনই দেখা যাবে যখন ইন্সটল রেডি
-     Install-এ ক্লিক করলেই সরাসরি ইন্সটল হবে
-═══════════════════════════════════════════ -->
 <div class="install-banner" id="installBanner" role="dialog" aria-label="Install app" aria-live="polite">
   <div class="ib-icon"><i class="fas fa-download"></i></div>
   <div class="ib-text">
@@ -519,7 +479,7 @@ const GROUPS = [
       start_url: location.origin + location.pathname,
       display: 'standalone',
       orientation: 'portrait',
-      background_color: '#08080a',
+      background_color: '#f4f5f7',
       theme_color: '#E50914',
       lang: 'bn',
       scope: location.origin + '/',
@@ -555,13 +515,12 @@ if('serviceWorker' in navigator){
 }
 
 // ═══════════════════════════════════════════
-// PWA: Install Prompt – সরাসরি ইন্সটল
+// PWA: Install Prompt
 // ═══════════════════════════════════════════
 let deferredPrompt = null;
 const INSTALL_DISMISS_KEY = 'ahn_iptv_install_dismissed';
-const INSTALL_DISMISS_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 দিন পর আবার দেখাবে
+const INSTALL_DISMISS_EXPIRY = 7 * 24 * 60 * 60 * 1000;
 
-// অ্যাপ ইন্সটল আছে কিনা চেক
 function isAppInstalled(){
   return window.matchMedia('(display-mode: standalone)').matches
       || window.matchMedia('(display-mode: fullscreen)').matches
@@ -570,7 +529,6 @@ function isAppInstalled(){
       || localStorage.getItem('pwa_installed') === 'true';
 }
 
-// ইউজার আগে ডিসমিস করেছিল কিনা (নির্দিষ্ট সময়ের মধ্যে)
 function isDismissedRecently(){
   const dismissed = localStorage.getItem(INSTALL_DISMISS_KEY);
   if(!dismissed) return false;
@@ -578,13 +536,8 @@ function isDismissedRecently(){
   return elapsed < INSTALL_DISMISS_EXPIRY;
 }
 
-// ইন্সটল ব্যানার দেখান (শুধু তখনই যখন deferredPrompt ready)
 function showInstallBanner(){
-  // ইতিমধ্যে ইন্সটল হলে বা ডিসমিস করলে দেখাব না
-  if(isAppInstalled() || isDismissedRecently()) return;
-  // deferredPrompt না থাকলে ইন্সটল সম্ভব নয় – তাই ব্যানার দেখানোর দরকার নেই
-  if(!deferredPrompt) return;
-
+  if(isAppInstalled() || isDismissedRecently() || !deferredPrompt) return;
   setTimeout(() => {
     const banner = document.getElementById('installBanner');
     if(banner && !isAppInstalled() && !isDismissedRecently() && deferredPrompt){
@@ -593,65 +546,123 @@ function showInstallBanner(){
   }, 3000);
 }
 
-// ব্যানার হাইড করা
 function hideInstallBanner(){
   const banner = document.getElementById('installBanner');
   if(banner) banner.classList.remove('show');
 }
 
-// ডিসমিস বাটন – টাইমস্ট্যাম্প সংরক্ষণ করে ব্যানার লুকান
 function dismissInstallBanner(){
   localStorage.setItem(INSTALL_DISMISS_KEY, Date.now().toString());
   hideInstallBanner();
   toast('পরে আবার দেখানো হবে', 'fa-clock');
 }
 
-// সরাসরি ইন্সটল – শুধুমাত্র deferredPrompt.prompt() কল করে
 function triggerInstall(){
   if(deferredPrompt){
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(choiceResult => {
       if(choiceResult.outcome === 'accepted'){
-        console.log('✅ User accepted install');
         localStorage.setItem('pwa_installed', 'true');
         hideInstallBanner();
         toast('🎉 অ্যাপ ইন্সটল হচ্ছে!', 'fa-circle-check');
       } else {
-        console.log('❌ User declined install');
         dismissInstallBanner();
       }
       deferredPrompt = null;
     });
   } else {
-    // কখনোই আসার কথা না, কিন্তু সেফটি ফলব্যাক
     hideInstallBanner();
   }
 }
 
-// beforeinstallprompt ইভেন্ট – ব্রাউজার ইন্সটল সাপোর্ট করলেই শুধু ব্যানার দেখাবে
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // অটো প্রম্পট বন্ধ
-  deferredPrompt = e; // পরে ব্যবহারের জন্য সংরক্ষণ
-  console.log('📲 beforeinstallprompt fired – ইন্সটল রেডি');
-  // এখন ব্যানার দেখানোর অনুমতি আছে
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('📲 beforeinstallprompt fired');
   showInstallBanner();
 });
 
-// অ্যাপ ইন্সটল হয়ে গেলে
 window.addEventListener('appinstalled', () => {
-  console.log('🎉 App installed successfully');
   localStorage.setItem('pwa_installed', 'true');
   hideInstallBanner();
   deferredPrompt = null;
   toast('✅ অ্যাপ সফলভাবে ইন্সটল হয়েছে!', 'fa-circle-check');
 });
 
-// ডিসপ্লে মোড চেক (ইন্সটল হয়ে লঞ্চ হলে)
 const displayModeQuery = window.matchMedia('(display-mode: standalone)');
 displayModeQuery.addEventListener('change', (e) => {
   if(e.matches){
     localStorage.setItem('pwa_installed', 'true');
     hideInstallBanner();
+  }
+});
+
+// ═══════════════════════════════════════════
+// LANDSCAPE FULLSCREEN + ZOOM
+// ═══════════════════════════════════════════
+let currentZoom = 1;
+function zoomVideo(step){
+  const wrap = document.getElementById('playerWrap');
+  if(!document.fullscreenElement && !document.webkitFullscreenElement){
+    toast('জুম শুধু ফুলস্ক্রিনে কাজ করে', 'fa-info-circle');
+    return;
+  }
+  currentZoom = Math.min(3, Math.max(0.5, currentZoom + step));
+  const videoEl = document.getElementById('video');
+  if(videoEl.style.display !== 'none'){
+    videoEl.style.transform = `scale(${currentZoom})`;
+  }
+  const iframe = document.querySelector('iframe.embed-player');
+  if(iframe){
+    iframe.style.transform = `scale(${currentZoom})`;
+  }
+}
+
+function toggleLandscape(){
+  const wrap = document.getElementById('playerWrap');
+  if(!document.fullscreenElement && !document.webkitFullscreenElement){
+    const requestFS = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.mozRequestFullScreen;
+    if(requestFS){
+      requestFS.call(wrap).then(() => {
+        if(screen.orientation && screen.orientation.lock){
+          screen.orientation.lock('landscape').catch(() => {});
+        }
+        document.getElementById('fsBtn').innerHTML = '<i class="fas fa-compress"></i>';
+        wrap.classList.add('fullscreen-active');
+        currentZoom = 1;
+        const videoEl = document.getElementById('video');
+        if(videoEl) videoEl.style.transform = 'scale(1)';
+        const iframe = document.querySelector('iframe.embed-player');
+        if(iframe) iframe.style.transform = 'scale(1)';
+      }).catch(() => toast('ফুলস্ক্রিন করা যায়নি', 'fa-triangle-exclamation'));
+    }
+  } else {
+    if(document.exitFullscreen){
+      document.exitFullscreen();
+      if(screen.orientation && screen.orientation.unlock){
+        screen.orientation.unlock();
+      }
+      document.getElementById('fsBtn').innerHTML = '<i class="fas fa-expand"></i>';
+      wrap.classList.remove('fullscreen-active');
+      currentZoom = 1;
+      const videoEl = document.getElementById('video');
+      if(videoEl) videoEl.style.transform = 'scale(1)';
+      const iframe = document.querySelector('iframe.embed-player');
+      if(iframe) iframe.style.transform = 'scale(1)';
+    } else if(document.webkitExitFullscreen){
+      document.webkitExitFullscreen();
+    }
+  }
+}
+document.addEventListener('fullscreenchange', () => {
+  if(!document.fullscreenElement){
+    document.getElementById('playerWrap').classList.remove('fullscreen-active');
+    document.getElementById('fsBtn').innerHTML = '<i class="fas fa-expand"></i>';
+    currentZoom = 1;
+    const videoEl = document.getElementById('video');
+    if(videoEl) videoEl.style.transform = 'scale(1)';
+    const iframe = document.querySelector('iframe.embed-player');
+    if(iframe) iframe.style.transform = 'scale(1)';
   }
 });
 
@@ -724,7 +735,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   setupPlayerUI();
   setupKeys();
   updateFavBadge();
-  // আর আলাদা করে ব্যানার দেখানোর দরকার নেই – beforeinstallprompt নিজেই দেখাবে
 });
 
 // ═══════════════════════════════════════════
@@ -776,9 +786,6 @@ function normGroup(g){
   return 'Others';
 }
 
-// ═══════════════════════════════════════════
-// POPULAR CHANNELS PANEL
-// ═══════════════════════════════════════════
 function getPopularList(){
   if(!channels.length) return [];
   let found = [];
@@ -799,7 +806,7 @@ function getPopularList(){
 
 function renderPopular(){
   const list = getPopularList();
-  const FB='https://placehold.co/42x32/111/444?text=TV';
+  const FB='https://placehold.co/42x32/f0f0f0/aaa?text=TV';
   const curUrl = channels[curIdx]?.url;
   const el = document.getElementById('popList');
   if(!list.length){
@@ -826,9 +833,6 @@ function scrollToGrid(){
   document.getElementById('channelGrid').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ═══════════════════════════════════════════
-// SIDEBAR
-// ═══════════════════════════════════════════
 function buildSidebar(){
   const gc={};
   channels.forEach(c=>{ const g=normGroup(c.group); gc[g]=(gc[g]||0)+1; });
@@ -870,11 +874,8 @@ function onSearch(q){
   applyFilter(curGroup,q);
 }
 
-// ═══════════════════════════════════════════
-// RENDER GRID
-// ═══════════════════════════════════════════
 function esc(u){ return u.replace(/'/g,"\\'").replace(/"/g,'"'); }
-const FB='https://placehold.co/200x100/111/444?text=TV';
+const FB='https://placehold.co/200x100/f0f0f0/aaa?text=TV';
 
 function renderGrid(){
   const grid=document.getElementById('channelGrid');
@@ -912,9 +913,6 @@ function clickCard(url){
   if(idx!==-1) playCh(idx,true);
 }
 
-// ═══════════════════════════════════════════
-// PLAY CHANNEL
-// ═══════════════════════════════════════════
 function playCh(index, scrollTop=false){
   if(index<0||index>=channels.length) return;
   curIdx=index;
@@ -928,6 +926,8 @@ function playCh(index, scrollTop=false){
   wrap.querySelectorAll('iframe.embed-player').forEach(f=>f.remove());
   video.style.display='block';
   video.src='';
+  video.style.transform = 'scale(1)';
+  currentZoom = 1;
 
   const url = ch.url.trim();
   const type = getUrlType(url);
@@ -964,8 +964,8 @@ function playCh(index, scrollTop=false){
   document.getElementById('npGroup').textContent = ch.group||'—';
   document.getElementById('npTypeBadge').textContent = urlTypeBadgeLabel(url);
   const logo=document.getElementById('npLogo');
-  logo.src=ch.logo||'https://placehold.co/52x52/111/444?text=TV';
-  logo.onerror=()=>{ logo.src='https://placehold.co/52x52/111/444?text=TV'; };
+  logo.src=ch.logo||'https://placehold.co/52x52/f0f0f0/aaa?text=TV';
+  logo.onerror=()=>{ logo.src='https://placehold.co/52x52/f0f0f0/aaa?text=TV'; };
   document.getElementById('chIdx').textContent = index+1;
   document.getElementById('chTot').textContent = channels.length;
 
@@ -976,9 +976,6 @@ function playCh(index, scrollTop=false){
   toast(ch.name,'fa-play');
 }
 
-// ═══════════════════════════════════════════
-// CONTROLS
-// ═══════════════════════════════════════════
 function togglePlay(){
   const v=document.getElementById('video');
   if(v.style.display==='none') return;
@@ -1002,19 +999,6 @@ function setVol(val){
   v.muted=false;
   document.getElementById('muteBtn').innerHTML=`<i class="fas ${val==0?'fa-volume-xmark':'fa-volume-high'}"></i>`;
 }
-function toggleFS(){
-  const w=document.getElementById('playerWrap');
-  if(!document.fullscreenElement&&!document.webkitFullscreenElement){
-    (w.requestFullscreen||w.webkitRequestFullscreen||w.mozRequestFullScreen).call(w);
-    document.getElementById('fsBtn').innerHTML='<i class="fas fa-compress"></i>';
-  } else {
-    (document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen).call(document);
-    document.getElementById('fsBtn').innerHTML='<i class="fas fa-expand"></i>';
-  }
-}
-document.addEventListener('fullscreenchange',()=>{
-  if(!document.fullscreenElement) document.getElementById('fsBtn').innerHTML='<i class="fas fa-expand"></i>';
-});
 async function togglePiP(){
   const v=document.getElementById('video');
   if(v.style.display==='none'){ toast('Embed চ্যানেলে PiP সাপোর্ট নেই','fa-triangle-exclamation'); return; }
@@ -1024,9 +1008,6 @@ async function togglePiP(){
   } catch(e){ toast('PiP সাপোর্টেড না','fa-triangle-exclamation'); }
 }
 
-// ═══════════════════════════════════════════
-// FAVORITES
-// ═══════════════════════════════════════════
 function toggleFav(e,url){
   e.stopPropagation();
   if(favs.includes(url)){ favs=favs.filter(x=>x!==url); toast('Favorites থেকে সরানো হয়েছে','fa-heart-crack'); }
@@ -1043,9 +1024,6 @@ function updateFavBadge(){
   b.textContent=favs.length>9?'9+':favs.length;
 }
 
-// ═══════════════════════════════════════════
-// VIDEO EVENTS
-// ═══════════════════════════════════════════
 function setupVideoEvents(){
   const v=document.getElementById('video');
   v.addEventListener('playing',()=>{ hideBuf(); updatePlayIcon(); });
@@ -1057,9 +1035,6 @@ function setupVideoEvents(){
 function showBuf(msg){ document.getElementById('bufTxt').textContent=msg; document.getElementById('buffering').classList.add('show'); }
 function hideBuf(){ document.getElementById('buffering').classList.remove('show'); }
 
-// ═══════════════════════════════════════════
-// PLAYER UI
-// ═══════════════════════════════════════════
 function setupPlayerUI(){
   const wrap=document.getElementById('playerWrap');
   const v=document.getElementById('video');
@@ -1074,9 +1049,6 @@ function setupPlayerUI(){
   v.addEventListener('play',showUI);
 }
 
-// ═══════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════
 function setupKeys(){
   document.addEventListener('keydown',e=>{
     if(['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
@@ -1086,7 +1058,7 @@ function setupKeys(){
       case 'ArrowRight': nextCh(); h='Next Channel →'; break;
       case 'ArrowLeft': prevCh(); h='Previous Channel ←'; break;
       case 'm': case 'M': toggleMute(); h='Mute / Unmute'; break;
-      case 'f': case 'F': toggleFS(); h='Fullscreen'; break;
+      case 'f': case 'F': toggleLandscape(); h='Landscape Fullscreen'; break;
       case 'p': case 'P': togglePiP(); h='Picture-in-Picture'; break;
       case 'ArrowUp':{
         const v=document.getElementById('video');
@@ -1112,18 +1084,12 @@ function showHint(t){
   sTimer=setTimeout(()=>el.classList.remove('show'),1600);
 }
 
-// ═══════════════════════════════════════════
-// SIDEBAR TOGGLE
-// ═══════════════════════════════════════════
 function toggleSidebar(forceClose=false){
   const s=document.getElementById('sidebar'),o=document.getElementById('overlay');
   if(forceClose){ s.classList.remove('open'); o.classList.remove('show'); }
   else { s.classList.toggle('open'); o.classList.toggle('show'); }
 }
 
-// ═══════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════
 function toast(msg,icon='fa-circle-check'){
   const c=document.getElementById('toastC');
   const t=document.createElement('div');
@@ -1133,18 +1099,24 @@ function toast(msg,icon='fa-circle-check'){
   setTimeout(()=>{ t.classList.add('hide'); setTimeout(()=>t.remove(),300); },2500);
 }
 
-// ═══════════════════════════════════════════
-// THEME
-// ═══════════════════════════════════════════
-function initTheme(){ if(localStorage.getItem('ptv_theme')==='light') applyLight(true); }
-function toggleTheme(){ applyLight(!document.body.classList.contains('light')); }
+function initTheme(){
+  const saved = localStorage.getItem('ptv_theme');
+  if(saved === 'dark'){
+    applyLight(false);
+  } else {
+    applyLight(true);
+  }
+}
+function toggleTheme(){
+  const isLight = document.body.classList.contains('light');
+  applyLight(!isLight);
+}
 function applyLight(on){
-  document.body.classList.toggle('light',on);
-  document.getElementById('themeBtn').innerHTML=on?'<i class="fas fa-moon"></i>':'<i class="fas fa-sun"></i>';
-  localStorage.setItem('ptv_theme',on?'light':'dark');
+  document.body.classList.toggle('light', on);
+  document.getElementById('themeBtn').innerHTML = on ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  localStorage.setItem('ptv_theme', on ? 'light' : 'dark');
 }
 
-// BACK TO TOP
 window.addEventListener('scroll',()=>{ document.getElementById('topBtn').style.display=scrollY>400?'block':'none'; });
 </script>
 
