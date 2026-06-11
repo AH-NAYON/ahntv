@@ -456,7 +456,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 <div class="toast-c" id="toastC" aria-live="assertive"></div>
 <div class="s-hint" id="sHint" aria-live="polite"></div>
 
-<!-- INSTALL BANNER -->
+<!-- INSTALL BANNER (প্রতি রিফ্রেশে ফিরে আসবে) -->
 <div class="install-banner" id="installBanner" role="dialog" aria-label="Install app" aria-live="polite">
   <div class="ib-icon"><i class="fas fa-download"></i></div>
   <div class="ib-text">
@@ -490,7 +490,7 @@ const GROUPS = [
 ];
 
 // ═══════════════════════════════════════════
-// PWA: Manifest Dynamic Generation (Absolute icon URLs fix)
+// PWA: Manifest Dynamic Generation
 // ═══════════════════════════════════════════
 (function generateManifest(){
   try {
@@ -537,7 +537,7 @@ if('serviceWorker' in navigator){
 }
 
 // ═══════════════════════════════════════════
-// PWA: Install Prompt (প্রতি রিফ্রেশে দেখাবে)
+// PWA: Install Prompt (প্রতি রিফ্রেশেই আসবে)
 // ═══════════════════════════════════════════
 let deferredPrompt = null;
 
@@ -550,10 +550,11 @@ function isAppInstalled(){
 }
 
 function showInstallBanner(){
-  if(isAppInstalled() || !deferredPrompt) return;
+  // শুধু তখনই দেখাবো যখন অ্যাপ ইন্সটল হয়নি
+  if(isAppInstalled()) return;
   setTimeout(() => {
     const banner = document.getElementById('installBanner');
-    if(banner && !isAppInstalled() && deferredPrompt){
+    if(banner && !isAppInstalled()){
       banner.classList.add('show');
     }
   }, 3000);
@@ -565,11 +566,13 @@ function hideInstallBanner(){
 }
 
 function dismissInstallBanner(){
+  // ব্যানার হাইড করবে, কিন্তু কোনো ডিসমিস সংরক্ষণ করবে না
   hideInstallBanner();
 }
 
 function triggerInstall(){
   if(deferredPrompt){
+    // যদি beforeinstallprompt ফায়ার করে থাকে, সরাসরি ইন্সটল প্রম্পট
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(choiceResult => {
       if(choiceResult.outcome === 'accepted'){
@@ -582,6 +585,18 @@ function triggerInstall(){
       deferredPrompt = null;
     });
   } else {
+    // যদি deferredPrompt না থাকে, ম্যানুয়াল ইনস্ট্রাকশন দেখাও
+    const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+    const isAndroid = /android/.test(navigator.userAgent.toLowerCase());
+    let msg = '';
+    if(isIOS){
+      msg = 'Safari-তে Share বাটনে ট্যাপ করে "Add to Home Screen" নির্বাচন করুন';
+    } else if(isAndroid){
+      msg = 'ব্রাউজারের মেনু থেকে "Add to Home Screen" বা "Install" সিলেক্ট করুন';
+    } else {
+      msg = 'ব্রাউজারের মেনু থেকে Install/Add to Home Screen সিলেক্ট করুন';
+    }
+    toast(msg, 'fa-info-circle');
     hideInstallBanner();
   }
 }
@@ -590,6 +605,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   console.log('📲 beforeinstallprompt fired');
+  // beforeinstallprompt ফায়ার হলে আমরা জানি ইন্সটল সম্ভব, তাই ব্যানার দেখাই
   showInstallBanner();
 });
 
@@ -746,6 +762,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   setupPlayerUI();
   setupKeys();
   updateFavBadge();
+  // পেজ লোডের পরপরই ব্যানার দেখানোর চেষ্টা (যদি ইন্সটল না হয়)
+  showInstallBanner();
 });
 
 // ═══════════════════════════════════════════
