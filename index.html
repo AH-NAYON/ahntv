@@ -158,6 +158,26 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 .badge{position:absolute;top:-2px;right:-2px;background:var(--primary);color:#fff;font-size:8px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg)}
 .menu-btn{display:none}
 
+/* Install button in header */
+.install-header-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  display: none; /* shown when prompt available */
+  align-items: center;
+  gap: 5px;
+}
+.install-header-btn:hover {
+  background: var(--primary-h);
+  transform: scale(1.05);
+}
+
 /* OVERLAY */
 .overlay{position:fixed;top:60px;left:0;right:0;bottom:0;background:var(--overlay-bg);backdrop-filter:blur(3px);z-index:9998;opacity:0;pointer-events:none;transition:.3s}
 .overlay.show{opacity:1;pointer-events:auto}
@@ -252,7 +272,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 .fav-btn:hover{transform:scale(1.15);color:#fff}
 .fav-btn.on{color:var(--primary)}
 
-/* INSTALL BANNER */
+/* INSTALL BANNER (bottom popup) */
 .install-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
   background:var(--bg-panel); border:1px solid var(--bdr-h);
@@ -359,6 +379,10 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
       <span class="badge" id="favBadge" style="display:none" aria-live="polite">0</span>
     </button>
     <button class="nav-btn" id="themeBtn" onclick="toggleTheme()" title="Light mode" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+    <!-- নতুন ইন্সটল বাটন (শুধু প্রম্পট রেডি হলে দেখা যাবে) -->
+    <button class="install-header-btn" id="installHeaderBtn" onclick="triggerInstall()" style="display:none;">
+      <i class="fas fa-download"></i> <span class="bn">ইন্সটল</span>
+    </button>
   </div>
 </header>
 
@@ -456,7 +480,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 <div class="toast-c" id="toastC" aria-live="assertive"></div>
 <div class="s-hint" id="sHint" aria-live="polite"></div>
 
-<!-- INSTALL BANNER -->
+<!-- INSTALL BANNER (bottom) -->
 <div class="install-banner" id="installBanner" role="dialog" aria-label="Install app" aria-live="polite">
   <div class="ib-icon"><i class="fas fa-download"></i></div>
   <div class="ib-text">
@@ -490,7 +514,7 @@ const GROUPS = [
 ];
 
 // ═══════════════════════════════════════════
-// PWA: Manifest Dynamic Generation (Absolute icon URLs fix)
+// PWA: Manifest Dynamic Generation
 // ═══════════════════════════════════════════
 (function generateManifest(){
   try {
@@ -537,7 +561,7 @@ if('serviceWorker' in navigator){
 }
 
 // ═══════════════════════════════════════════
-// PWA: Install Prompt (প্রতি রিফ্রেশে দেখাবে)
+// PWA: Install Prompt (হেডার বাটন + ব্যানার)
 // ═══════════════════════════════════════════
 let deferredPrompt = null;
 
@@ -549,8 +573,12 @@ function isAppInstalled(){
       || localStorage.getItem('pwa_installed') === 'true';
 }
 
-function showInstallBanner(){
+function showInstallPrompts(){
   if(isAppInstalled() || !deferredPrompt) return;
+  // হেডারে ইন্সটল বাটন দেখাও
+  const headerBtn = document.getElementById('installHeaderBtn');
+  if(headerBtn) headerBtn.style.display = 'inline-flex';
+  // কিছুক্ষণ পর নিচের ব্যানার দেখাও (optional)
   setTimeout(() => {
     const banner = document.getElementById('installBanner');
     if(banner && !isAppInstalled() && deferredPrompt){
@@ -575,6 +603,7 @@ function triggerInstall(){
       if(choiceResult.outcome === 'accepted'){
         localStorage.setItem('pwa_installed', 'true');
         hideInstallBanner();
+        document.getElementById('installHeaderBtn').style.display = 'none';
         toast('🎉 অ্যাপ ইন্সটল হচ্ছে!', 'fa-circle-check');
       } else {
         hideInstallBanner();
@@ -590,12 +619,14 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   console.log('📲 beforeinstallprompt fired');
-  showInstallBanner();
+  showInstallPrompts();
 });
 
 window.addEventListener('appinstalled', () => {
   localStorage.setItem('pwa_installed', 'true');
   hideInstallBanner();
+  const headerBtn = document.getElementById('installHeaderBtn');
+  if(headerBtn) headerBtn.style.display = 'none';
   deferredPrompt = null;
   toast('✅ অ্যাপ সফলভাবে ইন্সটল হয়েছে!', 'fa-circle-check');
 });
@@ -605,11 +636,13 @@ displayModeQuery.addEventListener('change', (e) => {
   if(e.matches){
     localStorage.setItem('pwa_installed', 'true');
     hideInstallBanner();
+    const headerBtn = document.getElementById('installHeaderBtn');
+    if(headerBtn) headerBtn.style.display = 'none';
   }
 });
 
 // ═══════════════════════════════════════════
-// LANDSCAPE FULLSCREEN + ZOOM
+// LANDSCAPE FULLSCREEN + ZOOM (আগের মতই)
 // ═══════════════════════════════════════════
 let currentZoom = 1;
 function zoomVideo(step){
