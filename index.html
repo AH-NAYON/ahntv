@@ -135,7 +135,37 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 @keyframes livebeat{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
 @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
 @keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(229,9,20,.5)}70%{box-shadow:0 0 0 14px rgba(229,9,20,0)}100%{box-shadow:0 0 0 0 rgba(229,9,20,0)}}
+@keyframes loadPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.2);opacity:1}}
+@keyframes loadRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 .fade-up{animation:fadeUp .4s ease both}
+
+/* ═══════════════════════════════════════
+   PRELOADER (লোডিং স্ক্রিন)
+═══════════════════════════════════════ */
+#preloader{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:var(--bg-panel);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;
+  z-index:999999;transition:opacity .4s ease, visibility .4s ease;
+}
+#preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-ring{
+  width:60px;height:60px;border-radius:50%;
+  border:4px solid var(--bdr);
+  border-top-color:var(--primary);
+  animation:loadRotate .8s linear infinite;
+  margin-bottom:20px;
+}
+.loader-text{
+  font-size:16px;font-weight:700;color:var(--primary);
+  font-family:'Hind Siliguri',sans-serif;
+  letter-spacing:1px;
+  animation:loadPulse 1.8s ease-in-out infinite;
+}
+.loader-sub{
+  font-size:11px;color:var(--txt-m);margin-top:6px;
+  font-family:'Hind Siliguri',sans-serif;
+}
 
 /* SKELETON */
 .skeleton{background:linear-gradient(90deg,var(--skeleton-base) 25%,var(--skeleton-shine) 50%,var(--skeleton-base) 75%);background-size:400px 100%;animation:shimmer 1.4s infinite;border-radius:8px}
@@ -155,6 +185,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--txt);over
 .nav-actions{display:flex;align-items:center;gap:7px}
 .nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bdr);background:var(--btn-bg);color:var(--txt-m);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;position:relative}
 .nav-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+.nav-btn.install-btn-header{display:none} /* হেডার ইন্সটল বাটন হিডেন by default */
 .badge{position:absolute;top:-2px;right:-2px;background:var(--primary);color:#fff;font-size:8px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg)}
 .menu-btn{display:none}
 
@@ -252,7 +283,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 .fav-btn:hover{transform:scale(1.15);color:#fff}
 .fav-btn.on{color:var(--primary)}
 
-/* INSTALL BANNER */
+/* INSTALL BANNER (নিচের পপ-আপ) */
 .install-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
   background:var(--bg-panel); border:1px solid var(--bdr-h);
@@ -338,6 +369,15 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════
+     PRELOADER
+═══════════════════════════════════════ -->
+<div id="preloader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">AHN IPTV</div>
+  <div class="loader-sub">চ্যানেল লোড হচ্ছে...</div>
+</div>
+
 <header class="navbar">
   <div class="brand">
     <button class="nav-btn menu-btn" onclick="toggleSidebar()" aria-label="Menu"><i class="fas fa-bars"></i></button>
@@ -354,6 +394,10 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
   </div>
 
   <div class="nav-actions">
+    <!-- হেডার ইন্সটল বাটন (শুধু দেখা যাবে যখন deferredPrompt available) -->
+    <button class="nav-btn install-btn-header" id="headerInstallBtn" onclick="triggerInstall()" title="ইন্সটল করুন" aria-label="Install app">
+      <i class="fas fa-download"></i>
+    </button>
     <button class="nav-btn" id="favCountBtn" title="Favorites" onclick="filterGroup('Favorites',null)" aria-label="Favorites">
       <i class="fas fa-heart" aria-hidden="true"></i>
       <span class="badge" id="favBadge" style="display:none" aria-live="polite">0</span>
@@ -456,7 +500,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 <div class="toast-c" id="toastC" aria-live="assertive"></div>
 <div class="s-hint" id="sHint" aria-live="polite"></div>
 
-<!-- INSTALL BANNER (প্রতি রিফ্রেশে ফিরে আসবে) -->
+<!-- INSTALL BANNER (নিচের পপ-আপ) -->
 <div class="install-banner" id="installBanner" role="dialog" aria-label="Install app" aria-live="polite">
   <div class="ib-icon"><i class="fas fa-download"></i></div>
   <div class="ib-text">
@@ -537,7 +581,7 @@ if('serviceWorker' in navigator){
 }
 
 // ═══════════════════════════════════════════
-// PWA: Install Prompt (প্রতি রিফ্রেশেই আসবে)
+// PWA: Install Prompt (হেডার বাটন + বটম ব্যানার)
 // ═══════════════════════════════════════════
 let deferredPrompt = null;
 
@@ -550,11 +594,11 @@ function isAppInstalled(){
 }
 
 function showInstallBanner(){
-  // শুধু তখনই দেখাবো যখন অ্যাপ ইন্সটল হয়নি
-  if(isAppInstalled()) return;
+  // শুধু দেখাবে যখন deferredPrompt সেট করা এবং অ্যাপ ইন্সটল না
+  if(isAppInstalled() || !deferredPrompt) return;
   setTimeout(() => {
     const banner = document.getElementById('installBanner');
-    if(banner && !isAppInstalled()){
+    if(banner && !isAppInstalled() && deferredPrompt){
       banner.classList.add('show');
     }
   }, 3000);
@@ -566,38 +610,32 @@ function hideInstallBanner(){
 }
 
 function dismissInstallBanner(){
-  // ব্যানার হাইড করবে, কিন্তু কোনো ডিসমিস সংরক্ষণ করবে না
   hideInstallBanner();
+  // এখন আর মনে রাখার দরকার নেই, রিফ্রেশে আবার আসবে
 }
 
 function triggerInstall(){
   if(deferredPrompt){
-    // যদি beforeinstallprompt ফায়ার করে থাকে, সরাসরি ইন্সটল প্রম্পট
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(choiceResult => {
       if(choiceResult.outcome === 'accepted'){
         localStorage.setItem('pwa_installed', 'true');
         hideInstallBanner();
+        updateHeaderInstallBtn(false); // বাটন লুকাও
         toast('🎉 অ্যাপ ইন্সটল হচ্ছে!', 'fa-circle-check');
       } else {
-        hideInstallBanner();
+        dismissInstallBanner();
       }
       deferredPrompt = null;
     });
-  } else {
-    // যদি deferredPrompt না থাকে, ম্যানুয়াল ইনস্ট্রাকশন দেখাও
-    const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-    const isAndroid = /android/.test(navigator.userAgent.toLowerCase());
-    let msg = '';
-    if(isIOS){
-      msg = 'Safari-তে Share বাটনে ট্যাপ করে "Add to Home Screen" নির্বাচন করুন';
-    } else if(isAndroid){
-      msg = 'ব্রাউজারের মেনু থেকে "Add to Home Screen" বা "Install" সিলেক্ট করুন';
-    } else {
-      msg = 'ব্রাউজারের মেনু থেকে Install/Add to Home Screen সিলেক্ট করুন';
-    }
-    toast(msg, 'fa-info-circle');
-    hideInstallBanner();
+  }
+}
+
+// হেডার ইন্সটল বাটন হ্যান্ডলিং
+function updateHeaderInstallBtn(show){
+  const btn = document.getElementById('headerInstallBtn');
+  if(btn){
+    btn.style.display = show ? 'flex' : 'none';
   }
 }
 
@@ -605,13 +643,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   console.log('📲 beforeinstallprompt fired');
-  // beforeinstallprompt ফায়ার হলে আমরা জানি ইন্সটল সম্ভব, তাই ব্যানার দেখাই
+  // হেডার বাটন দেখাও
+  updateHeaderInstallBtn(true);
   showInstallBanner();
 });
 
 window.addEventListener('appinstalled', () => {
   localStorage.setItem('pwa_installed', 'true');
   hideInstallBanner();
+  updateHeaderInstallBtn(false);
   deferredPrompt = null;
   toast('✅ অ্যাপ সফলভাবে ইন্সটল হয়েছে!', 'fa-circle-check');
 });
@@ -621,6 +661,7 @@ displayModeQuery.addEventListener('change', (e) => {
   if(e.matches){
     localStorage.setItem('pwa_installed', 'true');
     hideInstallBanner();
+    updateHeaderInstallBtn(false);
   }
 });
 
@@ -762,9 +803,22 @@ document.addEventListener('DOMContentLoaded',()=>{
   setupPlayerUI();
   setupKeys();
   updateFavBadge();
-  // পেজ লোডের পরপরই ব্যানার দেখানোর চেষ্টা (যদি ইন্সটল না হয়)
-  showInstallBanner();
+  // হেডার ইন্সটল বাটন ইতিমধ্যে show/hide through beforeinstallprompt
 });
+
+// ═══════════════════════════════════════════
+// PRELOADER HIDE (চ্যানেল লোড হলে)
+// ═══════════════════════════════════════════
+function hidePreloader(){
+  const preloader = document.getElementById('preloader');
+  if(preloader){
+    preloader.classList.add('hidden');
+    // DOM থেকে রিমুভ optional
+    setTimeout(() => {
+      if(preloader.parentNode) preloader.parentNode.removeChild(preloader);
+    }, 500);
+  }
+}
 
 // ═══════════════════════════════════════════
 // FETCH
@@ -773,6 +827,7 @@ function fetchChannels(){
   if(!API_URL || API_URL.includes('YOUR_')){
     document.getElementById('playerSkeleton').style.display='none';
     document.getElementById('channelGrid').innerHTML='<div class="empty"><i class="fas fa-plug-circle-exclamation"></i><p class="bn">Apps Script URL সেট করুন</p></div>';
+    hidePreloader();
     return;
   }
   fetch(API_URL)
@@ -790,11 +845,13 @@ function fetchChannels(){
       } else {
         toast('Sheet এ কোনো চ্যানেল নেই','fa-triangle-exclamation');
       }
+      hidePreloader();
     })
     .catch(err=>{
       console.error(err);
       document.getElementById('playerSkeleton').style.display='none';
       document.getElementById('channelGrid').innerHTML=`<div class="empty"><i class="fas fa-wifi-slash"></i><p class="bn">চ্যানেল লোড হয়নি</p><p style="font-size:11px;margin-top:5px;color:var(--txt-d)">${err.message}</p></div>`;
+      hidePreloader();
       toast('চ্যানেল লোড হয়নি','fa-triangle-exclamation');
     });
 }
