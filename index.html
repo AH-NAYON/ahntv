@@ -1,17 +1,30 @@
 <!DOCTYPE html><html lang="bn"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<!-- ক্যাশ বন্ধ — প্রতি রিফ্রেশে নতুন ডাটা -->
+<!-- ক্যাশ বন্ধ -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>AHN - Bangla IPTV | লাইভ বাংলা চ্যানেল</title>
+<title>AHN - Bangla IPTV</title>
 <meta name="description" content="AHN - বাংলাদেশের সেরা ফ্রি লাইভ IPTV। বাংলা, স্পোর্টস, নিউজ, মুভি সব চ্যানেল একসাথে।">
 <meta name="keywords" content="bangla iptv,live tv,বাংলা টিভি,priyo tv,বাংলাদেশ টিভি">
 <meta name="robots" content="index,follow">
+
+<!-- 📱 -->
 <meta property="og:title" content="AHN - Bangla IPTV">
 <meta property="og:description" content="ফ্রি লাইভ বাংলা টিভি চ্যানেল">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://ah-nayon.github.io/ahntv/tvlive.png">
+<meta property="og:image:width" content="200">
+<meta property="og:image:height" content="200">
+<meta property="og:url" content="https://ah-nayon.github.io/ahntv/">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AHN - Bangla IPTV">
+<meta name="twitter:description" content="ফ্রি লাইভ বাংলা টিভি চ্যানেল">
+<meta name="twitter:image" content="https://ah-nayon.github.io/ahntv/tvlive.png">
+
 <meta name="theme-color" content="#E50914">
 
 <link rel="icon" type="image/png" href="tvlive.png">
@@ -34,6 +47,7 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest" defer></script>
 
 <style>
+/* … () … */
 :root {
   --primary:#E50914;--primary-h:#c2070f;--primary-glow:rgba(229,9,20,.3);
   --bg:#08080a;--bg-panel:#111114;--bg-card:#18181d;--bg-el:#1f1f26;
@@ -258,6 +272,7 @@ iframe.embed-player{width:100%;height:100%;border:none;display:block;background:
 </head>
 <body>
 
+<!-- (বাকি HTML বডি আগের মতোই, কোনো পরিবর্তন নেই) -->
 <header class="navbar">
   <div class="brand">
     <button class="nav-btn menu-btn" onclick="toggleSidebar()" aria-label="Menu"><i class="fas fa-bars"></i></button>
@@ -377,228 +392,55 @@ const GROUPS = [
   {name:'Others',icon:'fa-ellipsis'}
 ];
 
-// ═══════════════════════════════════════════
-// PWA MANIFEST
-// ═══════════════════════════════════════════
-(function(){
-  try{
-    const m={name:'AHN - Bangla IPTV',short_name:'AHN IPTV',description:'বাংলাদেশের সেরা ফ্রি লাইভ IPTV',start_url:location.origin+location.pathname,display:'standalone',orientation:'portrait',background_color:'#08080a',theme_color:'#E50914',lang:'bn',scope:location.origin+'/',icons:[{src:location.origin+'/tvlive.png',sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:location.origin+'/tvlive.png',sizes:'512x512',type:'image/png',purpose:'any maskable'}],categories:['entertainment','news','sports'],prefer_related_applications:false};
-    const b=new Blob([JSON.stringify(m)],{type:'application/json'});
-    const u=URL.createObjectURL(b);
-    const l=document.getElementById('manifestFallback');
-    if(l){l.href=u;l.removeAttribute('id');}
-  }catch(e){}
-})();
-
-// ═══════════════════════════════════════════
-// SERVICE WORKER CLEANUP
-// ═══════════════════════════════════════════
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(registrations => {
-    for (let registration of registrations) { registration.unregister(); }
-  }).catch(() => {});
-}
-
-// ═══════════════════════════════════════════
-// PWA INSTALL LOGIC
-// ═══════════════════════════════════════════
-let deferredPrompt = null;
-function isAppInstalled(){
-  return window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches || (navigator.standalone===true) || localStorage.getItem('pwa_installed')==='true';
-}
-function updateInstallUI(){
-  const hb=document.getElementById('installHeaderBtn');
-  if(isAppInstalled()){if(hb)hb.style.display='none';hideInstallBanner();return;}
-  if(hb)hb.style.display='inline-flex';
-  if(deferredPrompt&&!isAppInstalled()){setTimeout(()=>{const b=document.getElementById('installBanner');if(b&&!isAppInstalled()&&deferredPrompt)b.classList.add('show');},2500);}
-}
+// … (বাকি জাভাস্ক্রিপ্ট সম্পূর্ণ অপরিবর্তিত) …
+(function(){try{const m={name:'AHN - Bangla IPTV',short_name:'AHN IPTV',description:'বাংলাদেশের সেরা ফ্রি লাইভ IPTV',start_url:location.origin+location.pathname,display:'standalone',orientation:'portrait',background_color:'#08080a',theme_color:'#E50914',lang:'bn',scope:location.origin+'/',icons:[{src:location.origin+'/tvlive.png',sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:location.origin+'/tvlive.png',sizes:'512x512',type:'image/png',purpose:'any maskable'}],categories:['entertainment','news','sports'],prefer_related_applications:false};const b=new Blob([JSON.stringify(m)],{type:'application/json'});const u=URL.createObjectURL(b);const l=document.getElementById('manifestFallback');if(l){l.href=u;l.removeAttribute('id');}}catch(e){}})();
+if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(regs => { for (let r of regs) r.unregister(); }).catch(() => {}); }
+let deferredPrompt=null;
+function isAppInstalled(){return window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: fullscreen)').matches||(navigator.standalone===true)||localStorage.getItem('pwa_installed')==='true';}
+function updateInstallUI(){const hb=document.getElementById('installHeaderBtn');if(isAppInstalled()){if(hb)hb.style.display='none';hideInstallBanner();return;}if(hb)hb.style.display='inline-flex';if(deferredPrompt&&!isAppInstalled()){setTimeout(()=>{const b=document.getElementById('installBanner');if(b&&!isAppInstalled()&&deferredPrompt)b.classList.add('show');},2500);}}
 function hideInstallBanner(){const b=document.getElementById('installBanner');if(b)b.classList.remove('show');}
 function dismissInstallBanner(){hideInstallBanner();}
-function triggerInstall(){
-  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){localStorage.setItem('pwa_installed','true');hideInstallBanner();document.getElementById('installHeaderBtn').style.display='none';toast('🎉 অ্যাপ ইন্সটল হচ্ছে!','fa-circle-check');}else{hideInstallBanner();}deferredPrompt=null;});}
-  else if(isAppInstalled()){toast('✅ অ্যাপ ইতিমধ্যে ইন্সটল করা আছে','fa-circle-check');}
-  else{toast('📥 APK ডাউনলোড শুরু হচ্ছে...','fa-download');setTimeout(()=>{const a=document.createElement('a');a.href=APK_URL;a.download='AHNTV.apk';a.style.display='none';document.body.appendChild(a);a.click();document.body.removeChild(a);},600);}
-}
+function triggerInstall(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){localStorage.setItem('pwa_installed','true');hideInstallBanner();document.getElementById('installHeaderBtn').style.display='none';toast('🎉 অ্যাপ ইন্সটল হচ্ছে!','fa-circle-check');}else{hideInstallBanner();}deferredPrompt=null;});}else if(isAppInstalled()){toast('✅ অ্যাপ ইতিমধ্যে ইন্সটল করা আছে','fa-circle-check');}else{toast('📥 APK ডাউনলোড শুরু হচ্ছে...','fa-download');setTimeout(()=>{const a=document.createElement('a');a.href=APK_URL;a.download='AHNTV.apk';a.style.display='none';document.body.appendChild(a);a.click();document.body.removeChild(a);},600);}}
 window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;updateInstallUI();});
 window.addEventListener('appinstalled',()=>{localStorage.setItem('pwa_installed','true');hideInstallBanner();const hb=document.getElementById('installHeaderBtn');if(hb)hb.style.display='none';deferredPrompt=null;toast('✅ অ্যাপ সফলভাবে ইন্সটল হয়েছে!','fa-circle-check');});
-
-// ═══════════════════════════════════════════
-// STATE & DOM
-// ═══════════════════════════════════════════
-let channels=[],view=[],curIdx=0,curGroup='All';
-let favs=JSON.parse(localStorage.getItem('ptv_favs')||'[]');
-let hls=null,uiTimer=null,sTimer=null,searchDebounce=null,currentZoom=1;
+let channels=[],view=[],curIdx=0,curGroup='All',favs=JSON.parse(localStorage.getItem('ptv_favs')||'[]'),hls=null,uiTimer=null,sTimer=null,searchDebounce=null,currentZoom=1;
 const $={};
-function cacheDom(){
-  $.pw=document.getElementById('playerWrap');$.v=document.getElementById('video');
-  $.ps=document.getElementById('playerSkeleton');$.bf=document.getElementById('buffering');
-  $.bt=document.getElementById('bufTxt');$.nbn=document.getElementById('npBarName');
-  $.nt=document.getElementById('npTitle');$.ng=document.getElementById('npGroup');
-  $.ntb=document.getElementById('npTypeBadge');$.nl=document.getElementById('npLogo');
-  $.nc=document.getElementById('npCard');$.ci=document.getElementById('chIdx');
-  $.ct=document.getElementById('chTot');$.cg=document.getElementById('channelGrid');
-  $.st=document.getElementById('secTitle');$.cc=document.getElementById('chCount');
-  $.pb=document.getElementById('playBtn');$.mb=document.getElementById('muteBtn');
-  $.vs=document.getElementById('volSl');$.fs=document.getElementById('fsBtn');
-  $.ds=document.getElementById('desktopSearch');$.ms=document.getElementById('mobileSearch');
-  $.gt=document.getElementById('groupTabs');$.fb=document.getElementById('favBadge');
-  $.tc=document.getElementById('toastC');$.sh=document.getElementById('sHint');
-  $.tb=document.getElementById('topBtn');$.sb=document.getElementById('sidebar');
-  $.ov=document.getElementById('overlay');$.ib=document.getElementById('installBanner');
-  $.ihb=document.getElementById('installHeaderBtn');$.thb=document.getElementById('themeBtn');
-}
-cacheDom();
-
-function getUrlType(url){
-  if(!url)return'embed';const u=url.trim().toLowerCase();
-  if(u.includes('.m3u8')||u.includes('.m3u'))return'hls';
-  if(u.includes('youtube.com')||u.includes('youtu.be'))return'youtube';
-  return'embed';
-}
-function urlTypeBadgeLabel(url){const t=getUrlType(url);if(t==='hls')return'HLS';if(t==='youtube')return'YouTube';return'Embed';}
-function urlTypeClass(url){const t=getUrlType(url);if(t==='hls')return'hls';if(t==='youtube')return'yt';return'embed';}
-
-const EMBED_RULES=[
-  {re:/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/,fn:m=>`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`},
-  {re:/youtube\.com\/live\/([\w-]+)/,fn:m=>`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`},
-  {re:/\/embed\//i,fn:(_,url)=>url},
-];
-function getEmbedUrl(url){for(const r of EMBED_RULES){const m=url.match(r.re);if(m)return r.fn(m,url);}return url;}
-
-// ═══════════════════════════════════════════
-// INIT — EMBEDDED DATA (NO API FETCH)
-// ═══════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
-  initTheme();
-  channels = EMBEDDED_CHANNELS;
-  buildSidebar();
-  applyFilter('All','');
-  $.ps.style.display='none';
-  $.nc.style.display='flex';
-  if(channels.length){playCh(0,false);toast(channels.length+' টি চ্যানেল রেডি ⚡','fa-circle-check');}
-  else{toast('কোনো চ্যানেল নেই','fa-triangle-exclamation');}
-  setupVideoEvents();
-  setupPlayerUI();
-  setupKeys();
-  updateFavBadge();
-  if(!isAppInstalled()){$.ihb.style.display='inline-flex';}
-});
-
-function normGroup(g){
-  g=(g||'').toLowerCase().trim();
-  if(['bangla','bangladesh','indian bangla','inbangla','bd','deshe bideshe','deshi tv'].includes(g))return'Bangla';
-  if(g.includes('sport')||g.includes('cricket')||g.includes('football'))return'Sports';
-  if(g.includes('news'))return'News';
-  if(g.includes('movie'))return'Movies';
-  if(g.includes('music'))return'Music';
-  if(g.includes('kid')||g.includes('cartoon'))return'Kids';
-  if(['english','hindi','urdhu','urdu','arabic','indian'].some(x=>g.includes(x))&&!g.includes('bangla'))return'International';
-  if(g.includes('hindi'))return'Hindi';
-  if(g.includes('english'))return'English';
-  if(g.includes('indian bangla'))return'Indian Bangla';
-  if(['entertainment','drama','series'].some(x=>g.includes(x)))return'Entertainment';
-  if(g.includes('religious')||g.includes('islam'))return'Religious';
-  if(g.includes('documentary'))return'Documentary';
-  if(g.includes('weather'))return'Weather';
-  return'Others';
-}
-
-function buildSidebar(){
-  const gc={};
-  channels.forEach(c=>{const g=normGroup(c.group);gc[g]=(gc[g]||0)+1;});
-  gc['All']=channels.length;gc['Favorites']=favs.length;
-  $.gt.innerHTML=GROUPS.map(g=>`<button class="group-tab${g.name==='All'?' active':''}" onclick="filterGroup('${g.name}',this)"><i class="fas ${g.icon}"></i><span>${g.name}</span><span class="cnt">${gc[g.name]||0}</span></button>`).join('');
-}
-
-function filterGroup(group,btn){
-  curGroup=group;
-  document.querySelectorAll('.group-tab').forEach(e=>e.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  else document.querySelectorAll('.group-tab').forEach(e=>{if(e.textContent.includes(group))e.classList.add('active');});
-  $.ds.value='';$.ms.value='';applyFilter(group,'');
-  if(window.innerWidth<=900)toggleSidebar(true);
-}
-
-function applyFilter(group,q){
-  let list=channels;
-  if(group==='Favorites')list=channels.filter(c=>favs.includes(c.url));
-  else if(group!=='All')list=channels.filter(c=>normGroup(c.group)===group);
-  if(q)list=list.filter(c=>c.name.toLowerCase().includes(q.toLowerCase()));
-  view=list;
-  $.st.innerHTML=group==='Favorites'?'<i class="fas fa-heart" style="color:var(--primary)"></i> Favorites':group+' Channels';
-  $.cc.textContent=list.length+' চ্যানেল';renderGrid();
-}
-
+function cacheDom(){$.pw=document.getElementById('playerWrap');$.v=document.getElementById('video');$.ps=document.getElementById('playerSkeleton');$.bf=document.getElementById('buffering');$.bt=document.getElementById('bufTxt');$.nbn=document.getElementById('npBarName');$.nt=document.getElementById('npTitle');$.ng=document.getElementById('npGroup');$.ntb=document.getElementById('npTypeBadge');$.nl=document.getElementById('npLogo');$.nc=document.getElementById('npCard');$.ci=document.getElementById('chIdx');$.ct=document.getElementById('chTot');$.cg=document.getElementById('channelGrid');$.st=document.getElementById('secTitle');$.cc=document.getElementById('chCount');$.pb=document.getElementById('playBtn');$.mb=document.getElementById('muteBtn');$.vs=document.getElementById('volSl');$.fs=document.getElementById('fsBtn');$.ds=document.getElementById('desktopSearch');$.ms=document.getElementById('mobileSearch');$.gt=document.getElementById('groupTabs');$.fb=document.getElementById('favBadge');$.tc=document.getElementById('toastC');$.sh=document.getElementById('sHint');$.tb=document.getElementById('topBtn');$.sb=document.getElementById('sidebar');$.ov=document.getElementById('overlay');$.ib=document.getElementById('installBanner');$.ihb=document.getElementById('installHeaderBtn');$.thb=document.getElementById('themeBtn');}cacheDom();
+function getUrlType(u){if(!u)return'embed';u=u.trim().toLowerCase();if(u.includes('.m3u8')||u.includes('.m3u'))return'hls';if(u.includes('youtube.com')||u.includes('youtu.be'))return'youtube';return'embed';}
+function urlTypeBadgeLabel(u){const t=getUrlType(u);if(t==='hls')return'HLS';if(t==='youtube')return'YouTube';return'Embed';}
+function urlTypeClass(u){const t=getUrlType(u);if(t==='hls')return'hls';if(t==='youtube')return'yt';return'embed';}
+const EMBED_RULES=[{re:/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/,fn:m=>`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`},{re:/youtube\.com\/live\/([\w-]+)/,fn:m=>`https://www.youtube.com/embed/${m[1]}?autoplay=1&rel=0`},{re:/\/embed\//i,fn:(_,url)=>url}];
+function getEmbedUrl(u){for(const r of EMBED_RULES){const m=u.match(r.re);if(m)return r.fn(m,u);}return u;}
+document.addEventListener('DOMContentLoaded',()=>{initTheme();channels=EMBEDDED_CHANNELS;buildSidebar();applyFilter('All','');$.ps.style.display='none';$.nc.style.display='flex';if(channels.length){playCh(0,false);toast(channels.length+' টি চ্যানেল রেডি ⚡','fa-circle-check');}else{toast('কোনো চ্যানেল নেই','fa-triangle-exclamation');}setupVideoEvents();setupPlayerUI();setupKeys();updateFavBadge();if(!isAppInstalled()){$.ihb.style.display='inline-flex';}});
+function normGroup(g){g=(g||'').toLowerCase().trim();if(['bangla','bangladesh','indian bangla','inbangla','bd','deshe bideshe','deshi tv'].includes(g))return'Bangla';if(g.includes('sport')||g.includes('cricket')||g.includes('football'))return'Sports';if(g.includes('news'))return'News';if(g.includes('movie'))return'Movies';if(g.includes('music'))return'Music';if(g.includes('kid')||g.includes('cartoon'))return'Kids';if(['english','hindi','urdhu','urdu','arabic','indian'].some(x=>g.includes(x))&&!g.includes('bangla'))return'International';if(g.includes('hindi'))return'Hindi';if(g.includes('english'))return'English';if(g.includes('indian bangla'))return'Indian Bangla';if(['entertainment','drama','series'].some(x=>g.includes(x)))return'Entertainment';if(g.includes('religious')||g.includes('islam'))return'Religious';if(g.includes('documentary'))return'Documentary';if(g.includes('weather'))return'Weather';return'Others';}
+function buildSidebar(){const gc={};channels.forEach(c=>{const g=normGroup(c.group);gc[g]=(gc[g]||0)+1;});gc['All']=channels.length;gc['Favorites']=favs.length;$.gt.innerHTML=GROUPS.map(g=>`<button class="group-tab${g.name==='All'?' active':''}" onclick="filterGroup('${g.name}',this)"><i class="fas ${g.icon}"></i><span>${g.name}</span><span class="cnt">${gc[g.name]||0}</span></button>`).join('');}
+function filterGroup(group,btn){curGroup=group;document.querySelectorAll('.group-tab').forEach(e=>e.classList.remove('active'));if(btn)btn.classList.add('active');else document.querySelectorAll('.group-tab').forEach(e=>{if(e.textContent.includes(group))e.classList.add('active');});$.ds.value='';$.ms.value='';applyFilter(group,'');if(window.innerWidth<=900)toggleSidebar(true);}
+function applyFilter(group,q){let list=channels;if(group==='Favorites')list=channels.filter(c=>favs.includes(c.url));else if(group!=='All')list=channels.filter(c=>normGroup(c.group)===group);if(q)list=list.filter(c=>c.name.toLowerCase().includes(q.toLowerCase()));view=list;$.st.innerHTML=group==='Favorites'?'<i class="fas fa-heart" style="color:var(--primary)"></i> Favorites':group+' Channels';$.cc.textContent=list.length+' চ্যানেল';renderGrid();}
 function onSearch(q){if(searchDebounce)clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{$.ds.value=q;$.ms.value=q;applyFilter(curGroup,q);},150);}
 function esc(u){return u.replace(/'/g,"\\'").replace(/"/g,'"');}
-
-function renderGrid(){
-  $.cg.className='channel-grid fade-up';void $.cg.offsetWidth;
-  if(!view.length){$.cg.innerHTML='<div class="empty"><i class="fas fa-tv"></i><p class="bn">কোনো চ্যানেল পাওয়া যায়নি</p></div>';return;}
-  const curUrl=channels[curIdx]?.url;
-  $.cg.innerHTML=view.map(ch=>{
-    const isFav=favs.includes(ch.url),isAct=ch.url===curUrl;
-    const uType=urlTypeClass(ch.url),uLabel=urlTypeBadgeLabel(ch.url);
-    return `<div class="ch-card${isAct?' active':''}" onclick="clickCard('${esc(ch.url)}')" role="button" tabindex="0" aria-label="${ch.name}">
-      <button class="fav-btn${isFav?' on':''}" onclick="toggleFav(event,'${esc(ch.url)}')" title="Favorite"><i class="${isFav?'fas':'far'} fa-heart"></i></button>
-      <div class="card-thumb"><img src="${ch.logo||'https://placehold.co/200x100/111/444?text=TV'}" onerror="this.src='https://placehold.co/200x100/111/444?text=TV'" loading="lazy" alt="${ch.name}"><div class="play-ov"><i class="fas fa-play"></i></div><span class="url-type ${uType}">${uLabel}</span></div>
-      <div class="card-body"><div class="card-name">${ch.name}</div><div class="card-grp">${ch.group||'—'}</div></div>
-    </div>`;
-  }).join('');
-}
-
+function renderGrid(){$.cg.className='channel-grid fade-up';void $.cg.offsetWidth;if(!view.length){$.cg.innerHTML='<div class="empty"><i class="fas fa-tv"></i><p class="bn">কোনো চ্যানেল পাওয়া যায়নি</p></div>';return;}const curUrl=channels[curIdx]?.url;$.cg.innerHTML=view.map(ch=>{const isFav=favs.includes(ch.url),isAct=ch.url===curUrl;const uType=urlTypeClass(ch.url),uLabel=urlTypeBadgeLabel(ch.url);return `<div class="ch-card${isAct?' active':''}" onclick="clickCard('${esc(ch.url)}')" role="button" tabindex="0" aria-label="${ch.name}"><button class="fav-btn${isFav?' on':''}" onclick="toggleFav(event,'${esc(ch.url)}')" title="Favorite"><i class="${isFav?'fas':'far'} fa-heart"></i></button><div class="card-thumb"><img src="${ch.logo||'https://placehold.co/200x100/111/444?text=TV'}" onerror="this.src='https://placehold.co/200x100/111/444?text=TV'" loading="lazy" alt="${ch.name}"><div class="play-ov"><i class="fas fa-play"></i></div><span class="url-type ${uType}">${uLabel}</span></div><div class="card-body"><div class="card-name">${ch.name}</div><div class="card-grp">${ch.group||'—'}</div></div></div>`;}).join('');}
 function clickCard(url){const idx=channels.findIndex(c=>c.url===url);if(idx!==-1)playCh(idx,true);}
-
-function playCh(index,scrollTop=false){
-  if(index<0||index>=channels.length)return;
-  curIdx=index;const ch=channels[index];
-  showBuf('সার্ভারের সাথে কানেক্ট হচ্ছে...');
-  if(hls){hls.destroy();hls=null;}
-  $.pw.querySelectorAll('iframe.embed-player').forEach(f=>f.remove());
-  $.v.style.display='block';$.v.src='';$.v.style.transform='scale(1)';currentZoom=1;
-  const url=ch.url.trim(),type=getUrlType(url);
-  if(type==='hls'){
-    if(typeof Hls!=='undefined'&&Hls.isSupported()){hls=new Hls({enableWorker:true,lowLatencyMode:true,backBufferLength:90});hls.loadSource(url);hls.attachMedia($.v);hls.on(Hls.Events.MANIFEST_PARSED,()=>{$.v.play().catch(()=>{});updatePlayIcon();});hls.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal){showBuf('ভিডিও লোড হতে সমস্যা হচ্ছে ⚠️');setTimeout(hideBuf,3000);}});}
-    else if($.v.canPlayType('application/vnd.apple.mpegurl')){$.v.src=url;$.v.play().catch(()=>{});updatePlayIcon();}
-    else{showBuf('এই ব্রাউজারে HLS সাপোর্ট নেই ⚠️');setTimeout(hideBuf,2500);}
-  }else{const eu=getEmbedUrl(url);$.v.style.display='none';const ifr=document.createElement('iframe');ifr.className='embed-player';ifr.src=eu;ifr.allow='autoplay;fullscreen;encrypted-media;picture-in-picture';ifr.allowFullscreen=true;$.pw.insertBefore(ifr,$.pw.querySelector('.player-top-grad'));setTimeout(hideBuf,1800);}
-  $.nbn.textContent=ch.name;$.nt.textContent=ch.name;$.ng.textContent=ch.group||'—';$.ntb.textContent=urlTypeBadgeLabel(url);
-  $.nl.src=ch.logo||'https://placehold.co/52x52/111/444?text=TV';$.nl.onerror=()=>{$.nl.src='https://placehold.co/52x52/111/444?text=TV';};
-  $.ci.textContent=index+1;$.ct.textContent=channels.length;renderGrid();
-  if(scrollTop&&window.innerWidth<=900)window.scrollTo({top:0,behavior:'smooth'});
-}
+function playCh(index,scrollTop=false){if(index<0||index>=channels.length)return;curIdx=index;const ch=channels[index];showBuf('সার্ভারের সাথে কানেক্ট হচ্ছে...');if(hls){hls.destroy();hls=null;}$.pw.querySelectorAll('iframe.embed-player').forEach(f=>f.remove());$.v.style.display='block';$.v.src='';$.v.style.transform='scale(1)';currentZoom=1;const url=ch.url.trim(),type=getUrlType(url);if(type==='hls'){if(typeof Hls!=='undefined'&&Hls.isSupported()){hls=new Hls({enableWorker:true,lowLatencyMode:true,backBufferLength:90});hls.loadSource(url);hls.attachMedia($.v);hls.on(Hls.Events.MANIFEST_PARSED,()=>{$.v.play().catch(()=>{});updatePlayIcon();});hls.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal){showBuf('ভিডিও লোড হতে সমস্যা হচ্ছে ⚠️');setTimeout(hideBuf,3000);}});}else if($.v.canPlayType('application/vnd.apple.mpegurl')){$.v.src=url;$.v.play().catch(()=>{});updatePlayIcon();}else{showBuf('এই ব্রাউজারে HLS সাপোর্ট নেই ⚠️');setTimeout(hideBuf,2500);}}else{const eu=getEmbedUrl(url);$.v.style.display='none';const ifr=document.createElement('iframe');ifr.className='embed-player';ifr.src=eu;ifr.allow='autoplay;fullscreen;encrypted-media;picture-in-picture';ifr.allowFullscreen=true;$.pw.insertBefore(ifr,$.pw.querySelector('.player-top-grad'));setTimeout(hideBuf,1800);}$.nbn.textContent=ch.name;$.nt.textContent=ch.name;$.ng.textContent=ch.group||'—';$.ntb.textContent=urlTypeBadgeLabel(url);$.nl.src=ch.logo||'https://placehold.co/52x52/111/444?text=TV';$.nl.onerror=()=>{$.nl.src='https://placehold.co/52x52/111/444?text=TV';};$.ci.textContent=index+1;$.ct.textContent=channels.length;renderGrid();if(scrollTop&&window.innerWidth<=900)window.scrollTo({top:0,behavior:'smooth'});}
 function togglePlay(){if($.v.style.display==='none')return;$.v.paused?$.v.play():$.v.pause();updatePlayIcon();}
 function updatePlayIcon(){$.pb.innerHTML=`<i class="fas ${$.v.paused?'fa-play':'fa-pause'}"></i>`;}
 function nextCh(){playCh((curIdx+1)%channels.length,false);}
 function prevCh(){playCh((curIdx-1+channels.length)%channels.length,false);}
 function toggleMute(){$.v.muted=!$.v.muted;$.mb.innerHTML=`<i class="fas ${$.v.muted?'fa-volume-xmark':'fa-volume-high'}"></i>`;}
 function setVol(val){$.v.volume=parseFloat(val);$.v.muted=false;$.mb.innerHTML=`<i class="fas ${val==0?'fa-volume-xmark':'fa-volume-high'}"></i>`;}
-
 function zoomVideo(step){if(!document.fullscreenElement&&!document.webkitFullscreenElement){toast('জুম শুধু ফুলস্ক্রিনে কাজ করে','fa-info-circle');return;}currentZoom=Math.min(3,Math.max(0.5,currentZoom+step));if($.v.style.display!=='none')$.v.style.transform=`scale(${currentZoom})`;const ifr=document.querySelector('iframe.embed-player');if(ifr)ifr.style.transform=`scale(${currentZoom})`;}
-function toggleLandscape(){
-  if(!document.fullscreenElement&&!document.webkitFullscreenElement){const rfs=$.pw.requestFullscreen||$.pw.webkitRequestFullscreen;if(rfs){rfs.call($.pw).then(()=>{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{});$.fs.innerHTML='<i class="fas fa-compress"></i>';$.pw.classList.add('fullscreen-active');currentZoom=1;$.v.style.transform='scale(1)';}).catch(()=>toast('ফুলস্ক্রিন করা যায়নি','fa-triangle-exclamation'));}}
-  else{if(document.exitFullscreen){document.exitFullscreen();$.fs.innerHTML='<i class="fas fa-expand"></i>';$.pw.classList.remove('fullscreen-active');currentZoom=1;$.v.style.transform='scale(1)';}}
-}
+function toggleLandscape(){if(!document.fullscreenElement&&!document.webkitFullscreenElement){const rfs=$.pw.requestFullscreen||$.pw.webkitRequestFullscreen;if(rfs){rfs.call($.pw).then(()=>{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{});$.fs.innerHTML='<i class="fas fa-compress"></i>';$.pw.classList.add('fullscreen-active');currentZoom=1;$.v.style.transform='scale(1)';}).catch(()=>toast('ফুলস্ক্রিন করা যায়নি','fa-triangle-exclamation'));}}else{if(document.exitFullscreen){document.exitFullscreen();$.fs.innerHTML='<i class="fas fa-expand"></i>';$.pw.classList.remove('fullscreen-active');currentZoom=1;$.v.style.transform='scale(1)';}}}
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement){$.pw.classList.remove('fullscreen-active');$.fs.innerHTML='<i class="fas fa-expand"></i>';currentZoom=1;$.v.style.transform='scale(1)';}});
-
 async function togglePiP(){if($.v.style.display==='none'){toast('Embed চ্যানেলে PiP সাপোর্ট নেই','fa-triangle-exclamation');return;}try{if(document.pictureInPictureElement)await document.exitPictureInPicture();else if(document.pictureInPictureEnabled){await $.v.requestPictureInPicture();toast('Picture-in-Picture সক্রিয়','fa-clone');}}catch(e){toast('PiP সাপোর্টেড না','fa-triangle-exclamation');}}
-
 function toggleFav(e,url){e.stopPropagation();if(favs.includes(url)){favs=favs.filter(x=>x!==url);toast('Favorites থেকে সরানো হয়েছে','fa-heart-crack');}else{favs.push(url);toast('Favorites এ যোগ করা হয়েছে','fa-heart');}localStorage.setItem('ptv_favs',JSON.stringify(favs));updateFavBadge();buildSidebar();if(curGroup==='Favorites')applyFilter('Favorites','');else renderGrid();}
 function updateFavBadge(){$.fb.style.display=favs.length?'flex':'none';$.fb.textContent=favs.length>9?'9+':favs.length;}
-
 function setupVideoEvents(){$.v.addEventListener('playing',()=>{hideBuf();updatePlayIcon();});$.v.addEventListener('waiting',()=>showBuf('বাফার হচ্ছে...'));$.v.addEventListener('pause',updatePlayIcon);$.v.addEventListener('volumechange',()=>{$.vs.value=$.v.muted?0:$.v.volume;});$.v.addEventListener('error',()=>{showBuf('স্ট্রিম লোড হয়নি ⚠️');setTimeout(hideBuf,3000);});}
 function showBuf(msg){$.bt.textContent=msg;$.bf.classList.add('show');}
 function hideBuf(){$.bf.classList.remove('show');}
-
 function setupPlayerUI(){function showUI(){$.pw.classList.add('ui-on');clearTimeout(uiTimer);uiTimer=setTimeout(()=>{if(!$.v.paused)$.pw.classList.remove('ui-on');},2800);}$.pw.addEventListener('mousemove',showUI);$.pw.addEventListener('touchstart',showUI,{passive:true});$.v.addEventListener('pause',()=>$.pw.classList.add('ui-on'));$.v.addEventListener('play',showUI);}
-
 function setupKeys(){document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;let h='';switch(e.key){case' ':case'k':e.preventDefault();togglePlay();h='Play/Pause';break;case'ArrowRight':nextCh();h='Next→';break;case'ArrowLeft':prevCh();h='Prev←';break;case'm':case'M':toggleMute();h='Mute';break;case'f':case'F':toggleLandscape();h='Fullscreen';break;case'p':case'P':togglePiP();h='PiP';break;case'ArrowUp':$.v.volume=Math.min(1,$.v.volume+0.1);$.vs.value=$.v.volume;h='Vol+';break;case'ArrowDown':$.v.volume=Math.max(0,$.v.volume-0.1);$.vs.value=$.v.volume;h='Vol−';break;}if(h)showHint(h);});}
 function showHint(t){$.sh.textContent=t;$.sh.classList.add('show');clearTimeout(sTimer);sTimer=setTimeout(()=>$.sh.classList.remove('show'),1400);}
-
 function toggleSidebar(forceClose=false){if(forceClose){$.sb.classList.remove('open');$.ov.classList.remove('show');}else{$.sb.classList.toggle('open');$.ov.classList.toggle('show');}}
-
 function toast(msg,icon='fa-circle-check'){const t=document.createElement('div');t.className='toast';t.innerHTML=`<i class="fas ${icon}"></i><span>${msg}</span>`;$.tc.appendChild(t);setTimeout(()=>{t.classList.add('hide');setTimeout(()=>t.remove(),250);},2200);}
-
 function initTheme(){const s=localStorage.getItem('ptv_theme');if(s==='dark')applyLight(false);else applyLight(true);}
 function toggleTheme(){applyLight(!document.body.classList.contains('light'));}
 function applyLight(on){if(on){document.body.classList.add('light');$.thb.innerHTML='<i class="fas fa-moon"></i>';$.thb.title='Dark mode';localStorage.setItem('ptv_theme','light');}else{document.body.classList.remove('light');$.thb.innerHTML='<i class="fas fa-sun"></i>';$.thb.title='Light mode';localStorage.setItem('ptv_theme','dark');}}
